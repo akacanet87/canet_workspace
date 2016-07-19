@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>tank</title>
+
+
+<style>
+
+
+</style>
+
+
+<script src="./AllRound.js"></script>
+<script>
+
+var screen;
+var stage;
+
+var s_wid;
+var s_hei;
+
+var s_win;
+var sel_mode;
+var sel_con;
+
+window.addEventListener("load", function(){
+
+	init();
+
+});
+
+function init(){
+
+	screen = document.getElementById("screen");
+	stage = document.getElementById("stage");
+
+/*
+
+	s_wid = screen.Width;
+	s_hei =  screen.availHeight;
+
+*/
+
+	s_wid = 1340;
+	s_hei =  670;
+
+	screen.style.margin="0px";
+
+	stage.style.width=s_wid+"px";
+	stage.style.height=s_hei+"px";
+	stage.style.background="gray";
+	stage.style.border="1px solid red";
+	stage.style.margin="auto";
+
+
+/*
+	s_win = new StartWin(stage, s_wid, s_hei);
+
+	s_win.init();
+
+
+
+	sel_mode = new selectMode( stage, s_wid, s_hei);
+
+	sel_mode.init();
+
+*/	
+
+	sel_con = new selectContents( stage, s_wid, s_hei );
+
+	sel_con.init();
+
+
+}
+
+
+function gameProcess(){
+
+
+
+}
+
+
+</script>
+
+
+
+ </head>
+ <body id="screen">
+
+<div id="stage"></div>
+  
+ </body>
+</html>
