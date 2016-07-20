@@ -11,6 +11,25 @@
 
 <style>
 
+#stage{
+
+	width : 1240px;
+	height : 900px;
+	background : gray;
+	border : 1px solid red;
+	margin-left : auto;
+	margin-right : auto;
+
+}
+
+#mask{
+
+	width : 1240px;
+	height : 900px;
+	overflow : hidden;
+
+}
+
 
 </style>
 
@@ -18,11 +37,12 @@
 <script src="./AllRound.js"></script>
 <script>
 
-var screen;
-var stage;
 
-var s_wid;
-var s_hei;
+var stage;
+var map;
+
+var s_wid=1240;
+var s_hei=900;
 
 var s_win;
 var sel_mode;
@@ -36,42 +56,33 @@ window.addEventListener("load", function(){
 
 function init(){
 
-	screen = document.getElementById("screen");
 	stage = document.getElementById("stage");
-
-/*
-
-	s_wid = screen.Width;
-	s_hei =  screen.availHeight;
-
-*/
-
-	s_wid = 1340;
-	s_hei =  670;
-
-	screen.style.margin="0px";
-
-	stage.style.width=s_wid+"px";
-	stage.style.height=s_hei+"px";
-	stage.style.background="gray";
-	stage.style.border="1px solid red";
-	stage.style.margin="auto";
+	map = document.getElementById("map");
 
 
 /*
-	s_win = new StartWin(stage, s_wid, s_hei);
+	s_win = new StartWin(map, s_wid, s_hei);
 
 	s_win.init();
 
+*/
+/*
+	n_win = new noticeWin( map, s_wid, s_hei );
 
+	n_win.init();
 
-	sel_mode = new selectMode( stage, s_wid, s_hei);
+	
+
+/*
+
+	sel_mode = new selectMode( map, s_wid, s_hei);
 
 	sel_mode.init();
 
-*/	
-
-	sel_con = new selectContents( stage, s_wid, s_hei );
+/*
+	
+*/
+	sel_con = new selectContents( map, s_wid, s_hei );
 
 	sel_con.init();
 
@@ -91,9 +102,17 @@ function gameProcess(){
 
 
  </head>
- <body id="screen">
+ <body>
 
-<div id="stage"></div>
+<div id="stage">
+
+	<div id="mask">
+
+		<div id="map"></div>
+	
+	</div>
+
+</div>
   
  </body>
 </html>
