@@ -422,7 +422,7 @@ var noticeWin = function( map, mapW, mapH ){
 	this.height=mapH;
 	this.audio = new Audio('../music/1.mp3');
 
-	this.audio.play();
+	
 
 	this.init = function(){
 
@@ -431,6 +431,7 @@ var noticeWin = function( map, mapW, mapH ){
 		this.img = document.createElement("img");
 
 		this.img.src="../images/f1.png";
+		this.audio.play();
 
 		this.img.style.width=this.width+"px";
 		this.img.style.height=this.height+"px";
@@ -554,47 +555,94 @@ var selectMode = function( map, mapW, mapH ){			// map로부터 map와 map의 �
 
 var selectContents = function(map, mapW, mapH){
 
-	this.div_show;												//	선택한 탱크를 보여줄 창을 담을 div
-	this.div_selTank;											//	탱크들을 선택하는 곳이 담긴 div
-	this.div_selMap;											//	맵을 고르는 창을 담을 div
-	this.div_selItem;											//	아이템을 고르는 창을 담을 div
-
-	this.div_showMargin=150;
-
-	this.bt_tankLen=150;
-	this.bt_itemLen=70;
-	
-	this.img_pLeft;												//	왼쪽 플레이어창의 이미지
-	this.img_pRight;											//	오른쪽 플레이어창의 이미지
-
 	this.map=map;
 	this.width=mapW;
 	this.height=mapH;
+
+	this.div_showP1;
+	this.div_showP2;
+	this.div_showVs;
+	this.div_selTank;											//	탱크들을 선택하는 곳이 담긴 div
+	this.div_down;
+	this.div_selMap;											//	맵을 고르는 창을 담을 div
+	this.audio;
+
+	this.div_showMargin=150;
+	this.bt_tankLen=150;
 	
 	this.bt_tankArr = new Array(6);												//	탱크 선택 버튼
 
+
 	this.init = function(){
 
+		this.audio = new audioCtrl('../music/selectContents.mp3');
+
+		this.audio.init();
+
 		this.div_showP1 = document.createElement("div");
-		this.div_showVs = document.createElement("div");
 		this.div_showP2 = document.createElement("div");
+		this.div_showVs = document.createElement("div");
+
+		this.div_tankP1 = document.createElement("div");
+		this.div_tankSkillP1 = document.createElement("div");
+		this.img_tankP1 = document.createElement("img");
+
+		this.div_tankP2 = document.createElement("div");
+		this.div_tankSkillP2 = document.createElement("div");
+		this.img_tankP2 = document.createElement("img");
+
 		this.div_selTank = document.createElement("div");
 		this.div_down = document.createElement("div");
 		this.div_selMap = document.createElement("div");
 
-		this.img_pLeft = document.createElement("img");
-		this.img_pRight = document.createElement("img");	
-
-		this.div_showP1.style.width=this.width/3+"px";									//	div_mul의 style 정의
-		this.div_showP1.style.height=this.height*2/5+"px";
-		this.div_showP1.style.textAlign="right";
-		this.div_showP1.style.float="left";
-		this.div_showP1.style.marginTop=this.div_showMargin+"px";
-
 		//this.div_showP1.style.border="1px solid red";
 
+		this.div_showP1.style.width=this.width/3+"px";									//	div_mul의 style 정의
+		this.div_showP1.style.height=this.height/2+"px";
+		this.div_showP1.style.textAlign="right";
+		this.div_showP1.style.float="left";
+		this.div_showP1.style.marginTop=this.div_showMargin/2+"px";
+
+		this.div_tankP1.style.width=this.width/3+"px";									//	div_mul의 style 정의
+		this.div_tankP1.style.height=this.height/4+"px";
+		this.div_tankP1.style.textAlign="right";
+		this.div_tankP1.style.float="left";
+
+		this.div_tankSkillP1.style.width=this.width/3+"px";									//	div_mul의 style 정의
+		this.div_tankSkillP1.style.height=this.height/4+"px";
+		this.div_tankSkillP1.style.textAlign="right";
+		this.div_tankSkillP1.style.float="left";
+
+		this.img_tankP1.style.width=200+"px";
+		this.img_tankP1.style.height=200+"px";
+		this.img_tankP1.src="../images/enemyship.png";
+		this.img_tankP1.style.border="1px solid red";
+
+
+		this.div_showP2.style.width=this.width/3+"px";									//	div_mul의 style 정의
+		this.div_showP2.style.height=this.height/2+"px";
+		this.div_showP2.style.textAlign="right";
+		this.div_showP2.style.float="left";
+		this.div_showP2.style.marginTop=this.div_showMargin/2+"px";
+
+		this.div_tankP2.style.width=this.width/3+"px";									//	div_mul의 style 정의
+		this.div_tankP2.style.height=this.height/4+"px";
+		this.div_tankP2.style.textAlign="left";
+		this.div_tankP2.style.float="left";
+
+		this.div_tankSkillP2.style.width=this.width/3+"px";									//	div_mul의 style 정의
+		this.div_tankSkillP2.style.height=this.height/4+"px";
+		this.div_tankSkillP2.style.textAlign="left";
+		this.div_tankSkillP2.style.float="left";
+
+		this.img_tankP2.style.width=200+"px";
+		this.img_tankP2.style.height=200+"px";
+		this.img_tankP2.src="../images/enemyship.png";
+		this.img_tankP2.style.border="1px solid red";
+
+
 		this.div_showVs.style.width=this.width/3+"px";									//	div_mul의 style 정의
-		this.div_showVs.style.height=this.height*2/5+"px";
+		this.div_showVs.style.height=this.height/4+"px";
 		this.div_showVs.style.textAlign="center";
 		this.div_showVs.innerText="VS"
 		this.div_showVs.style.fontSize="100pt";
@@ -603,37 +651,21 @@ var selectContents = function(map, mapW, mapH){
 		this.div_showVs.style.marginTop=this.div_showMargin+"px";
 		//this.div_showVs.style.border="1px solid red";
 
-		this.div_showP2.style.width=this.width/3+"px";									//	div_mul의 style 정의
-		this.div_showP2.style.height=this.height*2/5+"px";
-		this.div_showP2.style.textAlign="left";
-		this.div_showP2.style.float="left";
-		this.div_showP2.style.marginTop=this.div_showMargin+"px";
-		//this.div_showP2.style.border="1px solid red";
-
-		this.img_pLeft.style.width=200+"px";
-		this.img_pLeft.style.height=200+"px";
-		this.img_pLeft.src="../images/enemyship.png";
-		this.img_pLeft.style.border="1px solid red";
-
-		this.img_pRight.style.width=200+"px";
-		this.img_pRight.style.height=200+"px";
-		this.img_pRight.src="../images/enemyship.png";
-		this.img_pRight.style.border="1px solid red";
-
-		this.div_down.style.width=this.width-200+"px";
+		this.div_down.style.width=this.width+"px";
 		this.div_down.style.height=this.height/2+"px";
 		this.div_down.style.float="left";
-		this.div_down.style.margin="auto";
+		this.div_down.style.textAlign="center";
 
 		this.div_selMap.style.width=this.width/3+"px";
 		this.div_selMap.style.height=this.height/3+"px";
-		this.div_selMap.style.float="left";
 		this.div_selMap.style.border="30px solid red";
+		//this.div_selMap.style.display="inline-block";
+		this.div_selMap.style.float="left";
 
 		this.div_selTank.style.width=this.width/3+50+"px";
 		this.div_selTank.style.height=this.height/3+"px";
-		this.div_selTank.style.float="left";
 		this.div_selTank.style.border="30px solid red";
+		this.div_selTank.style.display="inline-block";
 
 		for( var a=0 ; a<this.bt_tankArr.length ; a++ ){
 
@@ -648,10 +680,14 @@ var selectContents = function(map, mapW, mapH){
 
 		}
 
-		this.div_showP1.appendChild(this.img_pLeft);
-		this.div_showP2.appendChild(this.img_pRight);
+		this.div_tankP1.appendChild(this.img_tankP1);
+		this.div_tankP2.appendChild(this.img_tankP2);
 
-		
+		this.div_showP1.appendChild(this.div_tankP1);
+		this.div_showP1.appendChild(this.div_tankSkillP1);
+		this.div_showP2.appendChild(this.div_tankP2);
+		this.div_showP2.appendChild(this.div_tankSkillP2);
+
 		this.div_down.appendChild(this.div_selMap);
 		this.div_down.appendChild(this.div_selTank);
 
@@ -661,11 +697,6 @@ var selectContents = function(map, mapW, mapH){
 		this.map.appendChild(this.div_down);
 	
 	}
-
-}
-
-
-var waitingRoom = function(){
 
 }
 
@@ -733,6 +764,32 @@ var logInForm = function(){
 
 
 var changeNick = function(){
+
+}
+
+var audioCtrl = function( src ){
+
+	this.src=src;
+	this.audio = new Audio(this.src);
+	/*
+	
+	this.audio.addEventListener('ended',function(){
+		
+		me.audio.currentTime=0;
+		me.audio.play();
+		
+	},false);
+
+	*/
+
+	//this.audio.loop="loop";
+	this.init = function(){
+
+		this.audio.play();
+		this.audio.loop="loop";	
+		this.audio.volume=0.1;
+
+	}
 
 }
 
@@ -909,6 +966,26 @@ var playerLoc = function(){						//	플레이어 초기 위치
 
 
 var laserTank = function(){
+
+	this.img;
+	this.damage1;
+	this.damage2;
+	this.distance;
+	this.fireAngle;
+	this.defense;
+	this.fireImg;
+	this.hitImg;
+	this.hp;
+
+	this.init = function(){
+
+		this.img.src="../images/tank.png";
+	
+	}
+
+	this.move = function(){
+	
+	}
 
 }
 

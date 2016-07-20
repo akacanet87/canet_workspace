@@ -47,6 +47,7 @@ var s_hei=900;
 var s_win;
 var sel_mode;
 var sel_con;
+var tankMove;
 
 window.addEventListener("load", function(){
 
@@ -58,7 +59,6 @@ function init(){
 
 	stage = document.getElementById("stage");
 	map = document.getElementById("map");
-
 
 /*
 	s_win = new StartWin(map, s_wid, s_hei);
@@ -95,6 +95,32 @@ function gameProcess(){
 
 
 }
+
+/*
+
+
+stage.addEventListener("keydown", function(){
+	var key=event.keyCode;
+
+	switch(key){
+		case 32:fire();break; //space bar
+		case 37:go(-2);break;
+		case 39:go(2);break;
+	}		
+});
+
+stage.addEventListener("keyup", function(){
+	
+	var key=event.keyCode;
+
+	if(key==37 || key==39){
+		tankmove.velX=0;
+		step=0;
+		rockman.running=false;
+	}
+});
+
+*/
 
 
 </script>
