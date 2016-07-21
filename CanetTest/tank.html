@@ -11,14 +11,11 @@
 
 <style>
 
-#stage{
+#map{
 
-	width : 1240px;
-	height : 900px;
-	background : gray;
-	border : 1px solid red;
-	margin-left : auto;
-	margin-right : auto;
+	width : 3000px;
+	height : 2000px;
+	position : relative;
 
 }
 
@@ -27,6 +24,8 @@
 	width : 1240px;
 	height : 900px;
 	overflow : hidden;
+	border : 1px solid red;
+
 
 }
 
@@ -34,9 +33,15 @@
 </style>
 
 
-<script src="./AllRound.js"></script>
+<script src="./Windows.js"></script>
+<script src="./TankFn.js"></script>
+<script src="./GameFn.js"></script>
+<script src="./SelectBox.js"></script>
+<script src="./Tanks.js"></script>
+<script src="./Maps.js"></script>
+<script src="./Items.js"></script>
+<script src="./SignIn.js"></script>
 <script>
-
 
 var stage;
 var map;
@@ -45,9 +50,29 @@ var s_wid=1240;
 var s_hei=900;
 
 var s_win;
+var n_win;
 var sel_mode;
 var sel_con;
 var tankMove;
+
+var map_oc;
+var tankP1;
+
+var blockArr = new Array();
+
+
+var x=0;
+var y=0;
+var tankWidth=80;
+var tankHeight=80;
+var velX=0;
+var velY=0;
+var gravity=0.1;
+
+var speed=0;
+
+var key;
+
 
 window.addEventListener("load", function(){
 
@@ -59,35 +84,91 @@ function init(){
 
 	stage = document.getElementById("stage");
 	map = document.getElementById("map");
-
 /*
+
 	s_win = new StartWin(map, s_wid, s_hei);
 
 	s_win.init();
 
-*/
-/*
+
+
 	n_win = new noticeWin( map, s_wid, s_hei );
 
 	n_win.init();
 
-	
+*/	
 
-/*
+/*	
 
 	sel_mode = new selectMode( map, s_wid, s_hei);
 
 	sel_mode.init();
 
+
+*/	
 /*
-	
-*/
+
 	sel_con = new selectContents( map, s_wid, s_hei );
 
 	sel_con.init();
 
 
+*/
+
+
+	tankP1 = new tankP1(map, x, y, tankWidth, tankHeight, velX, velY, gravity);
+
+	tankP1.init();
+
+	map_oc = new overCloudMap( map, blockArr );
+
+	map_oc.init();
+
 }
+
+
+window.addEventListener("keydown", function(){
+
+	key=event.keyCode;
+	
+	switch(key){
+		
+		case 32:
+		
+			fire();
+			
+			break;//스페이스바
+		
+		case 37:
+		
+			tankMove(-2);
+			
+			break;
+		
+		case 39:
+		
+			tankMove(2);
+			
+			break;
+	}
+
+});
+
+
+window.addEventListener("keyup", function(){
+
+	key=event.keyCode;
+
+	if(key==37 || key==39){
+		
+		tankP1.velX=0;
+		
+		speed=0;
+		
+	}
+
+});
+
 
 
 function gameProcess(){
