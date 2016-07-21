@@ -54,6 +54,7 @@ var n_win;
 var sel_mode;
 var sel_con;
 var tankMove;
+var fireBullet;
 
 var map_oc;
 var tankP1;
@@ -61,13 +62,14 @@ var tankP1;
 var blockArr = new Array();
 
 
-var x=0;
-var y=0;
-var tankWidth=80;
-var tankHeight=80;
+var x=10;
+var y=10;
+var tankWidth=70;
+var tankHeight=70;
 var velX=0;
 var velY=0;
 var gravity=0.1;
+var shotPw=0;
 
 var speed=0;
 
@@ -134,22 +136,27 @@ window.addEventListener("keydown", function(){
 	switch(key){
 		
 		case 32:
-		
-			fire();
+
+			fireBullet();
 			
 			break;//스페이스바
 		
 		case 37:
-		
+
 			tankMove(-2);
-			
+
+			tankP1.img.src="../images/tankLeft.png";
+	
 			break;
 		
 		case 39:
-		
+
 			tankMove(2);
+
+			tankP1.img.src="../images/tankRight.png";
 			
 			break;
+
 	}
 
 });

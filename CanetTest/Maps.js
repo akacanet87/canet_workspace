@@ -29,6 +29,11 @@ var overCloudMap = function( map, blockArr ){
 	
 	this.init = function(){
 
+		this.audio = new audioCtrl('../music/OnceInALifetime.mp3');
+
+		this.audio.init();
+
+
 		this.src="../images/space1.jpg"
 		//this.map.style.left=this.left+"px";
 		//this.map.style.top=this.top+"px";
@@ -37,7 +42,7 @@ var overCloudMap = function( map, blockArr ){
 
 		for( var a=0 ; a<20 ; a++ ){
 
-			this.block = new stBlock( this.map, 29, 29, 30*a, 700, "../images/block.png");
+			this.block = new stBlock( this.map, 50, 50, 45*a, 700, "../images/block.png");
 
 			this.block.init();
 
