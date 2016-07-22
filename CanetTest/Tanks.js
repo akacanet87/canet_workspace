@@ -22,77 +22,89 @@
 var laserTank = function(){
 
 	this.img;
-	this.src="../images/tank.png";
-	this.width=width;
-	this.height=height;
-	this.x=1;
-	this.y=1;
-	this.velX=0;
-	this.velY=0;
-
-	this.map=map;
-	
-	this.damage1=150;
-	this.damage2=300;
+	this.tankImg="../images/tank.png";
+	this.damage1=300;
+	this.damage2=100;
 	this.distance=50;
 	this.fireAngle=40;
 	this.defense=20;
 	this.fireImg;
 	this.hitImg;
 	this.hp=1200;
-
-	this.init = function(){
-
-		this.img = document.createElement("img");
-
-		this.img.src=this.src;
-		this.img.style.width=this.width+"px";
-		this.img.style.height=this.height+"px";
-		this.img.style.position="absolute";
-		this.img.style.left=this.x+"px";
-		this.img.style.top=this.y+"px";
-		
-		this.map.appendChild(this.img);
-
-	}
-
-	this.move = function(){
-
-		var me=this;
-
-		this.x=this.x+this.velX;
-		this.y=this.y+this.velY;
-
-		this.img.style.left=this.x+"px";
-		this.img.style.top=this.y+"px";
-
-		setTimeout(function(){
-
-			me.move();
-		
-		}, 20);
-
-	}
+	this.bulletImg1="../images/bullet.png";
+	this.bulletImg2="../images/bullet.png";
 
 }
 
 
-var OctopusTank = function(){
+var octopusTank = function(){
+
+	this.img;
+	this.src="../images/tank.png";
+	this.damage1=300;
+	this.damage2=100;
+	this.distance=50;
+	this.fireAngle=40;
+	this.defense=20;
+	this.fireImg;
+	this.hitImg;
+	this.hp=1200;
+	this.bulletImg1="../images/bullet.png";
+	this.bulletImg2="../images/bullet.png";
 
 }
 
 
 var starTank = function(){
 
+	this.img;
+	this.src="../images/tank.png";
+	this.damage1=300;
+	this.damage2=100;
+	this.distance=50;
+	this.fireAngle=40;
+	this.defense=20;
+	this.fireImg;
+	this.hitImg;
+	this.hp=1200;
+	this.bulletImg1="../images/bullet.png";
+	this.bulletImg2="../images/bullet.png";
+
 }
 
 
-var turtleTank = function(){
+var multiTank = function(){
+
+	this.img;
+	this.src="../images/tank.png";
+	this.damage1=300;
+	this.damage2=100;
+	this.distance=50;
+	this.fireAngle=40;
+	this.defense=20;
+	this.fireImg;
+	this.hitImg;
+	this.hp=1200;
+	this.bulletImg1="../images/bullet.png";
+	this.bulletImg2="../images/bullet.png";
 
 }
 
 
-var BombTank = function(){
+var cannonTank = function(){
+
+	this.img;
+	this.src="../images/tank.png";
+	this.damage1=300;
+	this.damage2=100;
+	this.distance=50;
+	this.fireAngle=40;
+	this.defense=20;
+	this.fireImg;
+	this.hitImg;
+	this.hp=1200;
+	this.bulletImg1="../images/bullet.png";
+	this.bulletImg2="../images/bullet.png";
 
 }
 

@@ -13,8 +13,6 @@
 
 #map{
 
-	width : 3000px;
-	height : 2000px;
 	position : relative;
 
 }
@@ -34,9 +32,11 @@
 
 
 <script src="./Windows.js"></script>
-<script src="./TankFn.js"></script>
-<script src="./GameFn.js"></script>
 <script src="./SelectBox.js"></script>
+<script src="./TankFn.js"></script>
+<script src="./BulletFn.js"></script>
+<script src="./GameFn.js"></script>
+<script src="./MapFn.js"></script>
 <script src="./Tanks.js"></script>
 <script src="./Maps.js"></script>
 <script src="./Items.js"></script>
@@ -49,15 +49,64 @@ var map;
 var s_wid=1240;
 var s_hei=900;
 
+
+//	창 관련 div 선언
 var s_win;
 var n_win;
 var sel_mode;
 var sel_con;
-var tankMove;
-var fireBullet;
 
-var map_oc;
-var tankP1;
+
+// map들 선언
+var overTheCloudMap= new overTheCloudMap();
+var onThePlanetMap= new onThePlanetMap();
+var theRuinedCityMap= new theRuinedCityMap();
+var theNightMap= new theNightMap();
+var theCastleMap= new theCastleMap();
+
+// map 속성 선언
+var bgmSrc;
+var bgSrc;
+var blockImg;
+var windImg;
+
+
+//	맵의 블럭 함수 선언
+var stBlock;
+
+
+
+
+// tank들 선언
+var laserTank= new laserTank();
+var octopusTank= new octopusTank();
+var starTank= new starTank();
+var multiTank= new multiTank();
+var cannonTank= new cannonTank();
+
+
+//	item들 선언
+var itemFixHp;
+var itemDoubleShot;
+var itemSuperBullet;
+var itemMoveTank;
+
+
+
+// 각 거푸집 선언
+var tankFn;
+var mapFn;
+var itemFn;
+var tankMove;
+var bullet;
+
+
+
+
+
+
+
+var side=true;
 
 var blockArr = new Array();
 
@@ -80,12 +129,17 @@ window.addEventListener("load", function(){
 
 	init();
 
+	
+
 });
 
 function init(){
 
 	stage = document.getElementById("stage");
 	map = document.getElementById("map");
+
+	map.style.width=3000+"px";
+	map.style.height=2000+"px";
 /*
 
 	s_win = new StartWin(map, s_wid, s_hei);
@@ -118,13 +172,15 @@ function init(){
 */
 
 
-	tankP1 = new tankP1(map, x, y, tankWidth, tankHeight, velX, velY, gravity);
+	tankFn = new tankFn(map, x, y, tankWidth, tankHeight, velX, velY, gravity, laserTank.distance, laserTank.fireAngle, laserTank.defense, laserTank.hp);
 
-	tankP1.init();
+	tankFn.init();
 
-	map_oc = new overCloudMap( map, blockArr );
+	mapFn = new mapFn( map, blockArr, overTheCloudMap.bgSrc, overTheCloudMap.bgmSrc, overTheCloudMap.blockImg );
 
-	map_oc.init();
+	mapFn.init();
+
+
 
 }
 
@@ -132,28 +188,36 @@ function init(){
 window.addEventListener("keydown", function(){
 
 	key=event.keyCode;
-	
+
 	switch(key){
 		
 		case 32:
 
-			fireBullet();
+			tankMove(0);
+
+			bullet = new bulletFn(map, tankFn.x, tankFn.y, gravity, 5, 5, side, laserTank.bulletImg1, laserTank.bulletImg2, laserTank.damage1, laserTank.damage2);
+
+			bullet.init();
 			
 			break;//스페이스바
 		
 		case 37:
 
+			side=false;
+
 			tankMove(-2);
 
-			tankP1.img.src="../images/tankLeft.png";
-	
+			tankFn.img.style.transform="rotateY(180deg)";
+			
 			break;
 		
 		case 39:
 
+			side=true;
+
 			tankMove(2);
 
-			tankP1.img.src="../images/tankRight.png";
+			tankFn.img.style.transform="rotateY(0deg)";
 			
 			break;
 
@@ -168,7 +232,7 @@ window.addEventListener("keyup", function(){
 
 	if(key==37 || key==39){
 		
-		tankP1.velX=0;
+		tankFn.velX=0;
 		
 		speed=0;
 		

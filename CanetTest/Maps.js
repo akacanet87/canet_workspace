@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////맵 종류 함수////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////맵 종류 //////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -17,93 +17,52 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-var overCloudMap = function( map, blockArr ){
+var overTheCloudMap = function(){
 
-	this.img;
-	this.block;
-	this.map=map;
-	this.left=-750;
-	this.top=-400;
-	this.src;
-	this.blockArr=blockArr;
-	
-	this.init = function(){
+	this.bgmSrc='../music/OnceInALifetime.mp3';
+	this.bgSrc="../images/space1.jpg";
+	this.blockImg="../images/block.png";
+	this.windImg="../images/enemyship.png";
 
-		this.audio = new audioCtrl('../music/OnceInALifetime.mp3');
+}
 
-		this.audio.init();
+var onThePlanetMap = function(){
 
-
-		this.src="../images/space1.jpg"
-		//this.map.style.left=this.left+"px";
-		//this.map.style.top=this.top+"px";
-
-		this.map.style.backgroundImage="url('"+this.src+"')";
-
-		for( var a=0 ; a<20 ; a++ ){
-
-			this.block = new stBlock( this.map, 50, 50, 45*a, 700, "../images/block.png");
-
-			this.block.init();
-
-			this.blockArr.push(this.block);
-
-			this.map.appendChild(this.blockArr[a].img);
-
-		}
-		
-	}
+	this.bgmSrc='../music/OnceInALifetime.mp3';
+	this.bgSrc="../images/space1.jpg";
+	this.blockImg="../images/block.png";
+	this.windImg="../images/enemyship.png";
 
 }
 
 
-var stBlock = function( map, width, height, x, y, src ){
+var theRuinedCityMap = function(){
 
-	this.map=map;
-	this.img;
-	this.width=width;
-	this.height=height;
-	this.x=x;
-	this.y=y;
-	this.src=src;
-
-	this.init = function(){
-
-		this.img = document.createElement("img");
-
-		this.img.src=this.src;
-
-		this.img.style.width=this.width+"px";
-		this.img.style.height=this.height+"px";
-
-		this.img.style.position="absolute";
-		this.img.style.left=this.x+"px";
-		this.img.style.top=this.y+"px";
-
-		this.map.appendChild(this.img);
-
-	}
-
-}
-
-
-
-var onPlanetMap = function(){
-
-}
-
-
-var beRuinedMap = function(){
+	this.bgmSrc='../music/OnceInALifetime.mp3';
+	this.bgSrc="../images/space1.jpg";
+	this.blockImg="../images/block.png";
+	this.windImg="../images/enemyship.png";
 
 }
 
 
 var theNightMap = function(){
 
+	this.bgmSrc='../music/OnceInALifetime.mp3';
+	this.bgSrc="../images/space1.jpg";
+	this.blockImg="../images/block.png";
+	this.windImg="../images/enemyship.png";
+
 }
 
 
 var theCastleMap = function(){
 
+	this.bgmSrc='../music/OnceInALifetime.mp3';
+	this.bgSrc="../images/space1.jpg";
+	this.blockImg="../images/block.png";
+	this.windImg="../images/enemyship.png";
+
 }
+
 
