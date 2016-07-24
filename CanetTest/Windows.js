@@ -22,26 +22,30 @@
 ////////////////////////////////////////////////////////////////////////
 //	시작 시 뜰 화면을 표시
 ////////////////////////////////////////////////////////////////////////
-var StartWin = function ( map, stageW, stageH  ){			// map로부터 map와 map의 높이 map의 넓이를 받는다
+var StartWin = function ( wrapper, stageW, stageH  ){			// stage로부터 stage와 stage의 높이 stage의 넓이를 받는다
 
-	this.map=map;
-	this.div_wrapper;
+	this.wrapper=wrapper;
+	this.stage;
 	this.width=stageW;
 	this.height=stageH;
 	
 
 	this.init = function(){
 
-		this.div_wrapper = document.createElement("div");
+		this.audio = new audioCtrl('../music/start.mp3');
 
-		this.div_wrapper.style.width=this.width+"px";
-		this.div_wrapper.style.height=this.height+"px";
-		this.div_wrapper.style.margin=0+"px";
-		this.div_wrapper.style.position="absolute";
+		this.audio.init();
 
-		this.div_wrapper.style.backgroundImage="url('../images/space1.jpg')";							//	배경이미지 소스
+		this.stage = document.createElement("div");
 
-		this.map.appendChild(this.div_wrapper);
+		this.stage.style.width=this.width+"px";
+		this.stage.style.height=this.height+"px";
+		this.stage.style.margin=0+"px";
+		this.stage.style.position="absolute";
+
+		this.stage.style.backgroundImage="url('../images/space1.jpg')";							//	배경이미지 소스
+
+		this.wrapper.appendChild(this.stage);
 
 	}
 
@@ -53,15 +57,19 @@ var StartWin = function ( map, stageW, stageH  ){			// map로부터 map와 map�
 ////////////////////////////////////////////////////////////////////////
 
 
-var noticeWin = function( map, stageW, stageH ){
+var noticeWin = function( stage, stageW, stageH ){
 
-	this.map=map;
+	this.stage=stage;
 	this.div_wrapper;
 	this.width=stageW;
 	this.height=stageH;
 	
 
 	this.init = function(){
+
+		this.audio = new audioCtrl('../music/notice.mp3');
+
+		this.audio.init();
 
 		this.div_wrapper = document.createElement("div");
 
@@ -72,7 +80,42 @@ var noticeWin = function( map, stageW, stageH ){
 
 		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
 
-		this.map.appendChild(this.div_wrapper);
+		this.stage.appendChild(this.div_wrapper);
+	
+	}
+
+}
+
+
+////////////////////////////////////////////////////////////////////////
+//	회원가입, 로그인 화면
+////////////////////////////////////////////////////////////////////////
+
+var logIn = function( stage, stageW, stageH ){
+
+	this.stage=stage;
+	this.div_wrapper;
+	this.width=stageW;
+	this.height=stageH;
+	this.audio;
+	
+
+	this.init = function(){
+
+		this.audio = new audioCtrl('../music/logIn.mp3');
+
+		this.audio.init();
+
+		this.div_wrapper = document.createElement("div");
+
+		this.div_wrapper.style.width=this.width+"px";
+		this.div_wrapper.style.height=this.height+"px";
+		this.div_wrapper.style.margin=0+"px";
+		this.div_wrapper.style.position="absolute";
+
+		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
+
+		this.stage.appendChild(this.div_wrapper);
 	
 	}
 
@@ -80,14 +123,10 @@ var noticeWin = function( map, stageW, stageH ){
 
 
 
-
-
-
-
 ////////////////////////////////////////////////////////////////////////
 //	플레이어 선택 화면
 ////////////////////////////////////////////////////////////////////////
-var selectMode = function( map, stageW, stageH ){			// map로부터 map와 map의 높이 map의 넓이를 받는다
+var selectMode = function( stage, stageW, stageH ){			// stage로부터 stage와 stage의 높이 stage의 넓이를 받는다
 
 	this.div_wrapper;
 	this.div_up;
@@ -97,7 +136,7 @@ var selectMode = function( map, stageW, stageH ){			// map로부터 map와 map�
 	this.img_mul;									//	멀티플레이 버튼에 들어갈 이미지
 	this.img_sing;									//	싱글플레이 버튼에 들어갈 이미지
 	this.img_bg;										//	배경에 넣을 이미지
-	this.map=map;
+	this.stage=stage;
 	this.width=stageW;
 	this.height=stageH;
 	this.bt_mul;										//	멀티플레이 선택 버튼
@@ -105,6 +144,10 @@ var selectMode = function( map, stageW, stageH ){			// map로부터 map와 map�
 	
 
 	this.init = function(){
+
+		this.audio = new audioCtrl('../music/selectMode.mp3');
+
+		this.audio.init();
 
 		this.div_wrapper = document.createElement("div");				//	버튼들을 넣을 div
 		this.div_down = document.createElement("div");
@@ -163,31 +206,18 @@ var selectMode = function( map, stageW, stageH ){			// map로부터 map와 map�
 		this.div_wrapper.appendChild(this.div_sing);
 		this.div_wrapper.appendChild(this.div_down);
 
-		this.map.appendChild(this.div_wrapper);
+		this.stage.appendChild(this.div_wrapper);
 
 
 	}
 
-/*
-
-	this.move = function(){
-
-		setTimeout(function(){
-
-			me.move();
-		
-		}, 100);
-
-	}
-
-*/
 
 }
 
 
-var selectContents = function(map, stageW, stageH){
+var selectContents = function(stage, stageW, stageH){
 
-	this.map=map;
+	this.stage=stage;
 	this.width=stageW;
 	this.height=stageH;
 
@@ -338,7 +368,7 @@ var selectContents = function(map, stageW, stageH){
 		this.div_wrapper.appendChild(this.div_showP2);
 		this.div_wrapper.appendChild(this.div_down);
 
-		this.map.appendChild(this.div_wrapper);
+		this.stage.appendChild(this.div_wrapper);
 
 
 	
@@ -347,13 +377,43 @@ var selectContents = function(map, stageW, stageH){
 }
 
 
-var itemShop = function( map, stageW, stageH ){
+var itemShop = function( stage, stageW, stageH ){
 
-	this.map=map;
+	this.stage=stage;
 	this.div_wrapper;
 	this.width=stageW;
 	this.height=stageH;
+	this.audio;
 	
+
+	this.init = function(){
+
+		this.audio = new audioCtrl('../music/shop.mp3');
+
+		this.audio.init();
+
+		this.div_wrapper = document.createElement("div");
+
+		this.div_wrapper.style.width=this.width+"px";
+		this.div_wrapper.style.height=this.height+"px";
+		this.div_wrapper.style.margin=0+"px";
+		this.div_wrapper.style.position="absolute";
+
+		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
+
+		this.stage.appendChild(this.div_wrapper);
+	
+	}
+
+}
+
+
+var loadGame = function( stage, stageW, stageH ){
+
+	this.stage=stage;
+	this.div_wrapper;
+	this.width=stageW;
+	this.height=stageH;
 
 	this.init = function(){
 
@@ -366,22 +426,27 @@ var itemShop = function( map, stageW, stageH ){
 
 		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
 
-		this.map.appendChild(this.div_wrapper);
+		this.stage.appendChild(this.div_wrapper);
 	
 	}
 
 }
 
 
-var loadGame = function( map, stageW, stageH ){
+var gameEnd = function( stage, stageW, stageH ){
 
-	this.map=map;
+	this.stage=stage;
 	this.div_wrapper;
 	this.width=stageW;
 	this.height=stageH;
+	this.audio;
 	
 
 	this.init = function(){
+
+		this.audio = new audioCtrl('../music/selectContents.mp3');
+
+		this.audio.init();
 
 		this.div_wrapper = document.createElement("div");
 
@@ -392,22 +457,27 @@ var loadGame = function( map, stageW, stageH ){
 
 		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
 
-		this.map.appendChild(this.div_wrapper);
+		this.stage.appendChild(this.div_wrapper);
 	
 	}
 
 }
 
 
-var gameStart = function( map, stageW, stageH ){
+var rankingWin = function( stage, stageW, stageH ){
 
-	this.map=map;
+	this.stage=stage;
 	this.div_wrapper;
 	this.width=stageW;
 	this.height=stageH;
+	this.audio;
 	
 
 	this.init = function(){
+
+		this.audio = new audioCtrl('../music/selectContents.mp3');
+
+		this.audio.init();
 
 		this.div_wrapper = document.createElement("div");
 
@@ -418,59 +488,7 @@ var gameStart = function( map, stageW, stageH ){
 
 		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
 
-		this.map.appendChild(this.div_wrapper);
-	
-	}
-
-}
-
-
-var gameEnd = function( map, stageW, stageH ){
-
-	this.map=map;
-	this.div_wrapper;
-	this.width=stageW;
-	this.height=stageH;
-	
-
-	this.init = function(){
-
-		this.div_wrapper = document.createElement("div");
-
-		this.div_wrapper.style.width=this.width+"px";
-		this.div_wrapper.style.height=this.height+"px";
-		this.div_wrapper.style.margin=0+"px";
-		this.div_wrapper.style.position="absolute";
-
-		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
-
-		this.map.appendChild(this.div_wrapper);
-	
-	}
-
-}
-
-
-var rankingWin = function( map, stageW, stageH ){
-
-	this.map=map;
-	this.div_wrapper;
-	this.width=stageW;
-	this.height=stageH;
-	
-
-	this.init = function(){
-
-		this.div_wrapper = document.createElement("div");
-
-		this.div_wrapper.style.width=this.width+"px";
-		this.div_wrapper.style.height=this.height+"px";
-		this.div_wrapper.style.margin=0+"px";
-		this.div_wrapper.style.position="absolute";
-
-		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
-
-		this.map.appendChild(this.div_wrapper);
+		this.stage.appendChild(this.div_wrapper);
 	
 	}
 

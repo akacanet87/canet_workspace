@@ -134,7 +134,7 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 
 			
 		// 부딪히지 않고 화면 밖으로 나가면
-		if( parseInt( this.img.style.left ) > parseInt( this.map.style.width ) ){
+		if( ( parseInt( this.img.style.left ) > parseInt( this.map.style.width )+200 ) || ( parseInt( this.img.style.left ) < -200 ) || ( parseInt( this.img.style.top ) > parseInt( this.map.style.height ) ) ){
 
 			//alert("저 자살할게요");
 

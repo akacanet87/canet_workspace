@@ -38,6 +38,8 @@ var tankFn = function(map, x, y, wid, hei, velX, velY, gravity, distance, fireAn
 	this.fireImg;
 	this.hitImg;
 
+	this.st;
+
 	this.init = function(){
 
 		this.img = document.createElement("img");
@@ -98,11 +100,54 @@ var tankFn = function(map, x, y, wid, hei, velX, velY, gravity, distance, fireAn
 		}
 
 
-		setTimeout(function(){
+		this.st=setTimeout(function(){
 
 			me.move();
 		
 		}, 10);
+
+/*
+				
+				//	총알과 부딪히면
+		for( var a=0 ; a<blockArr.length ; a++ ){
+
+			if(blockArr[a]!=undefined){							//	배열에 존재하는 img에 대해서만 (undefined가 아닌 경우만)
+				
+				var result = hitTest(this.img, blockArr[a].img);
+
+				if( result ){
+
+					//	총알 죽이고 총알의 setTimeout도 중지
+					this.map.removeChild(this.img);
+					clearTimeout(this.st);
+
+					//	적군 죽이고
+					this.map.removeChild(blockArr[a].img);			//	이미지를 먼저 없애고 delete를 맨마지막에 쓴다.
+					clearTimeout(blockArr[a].st);
+					delete blockArr[a];				//	배열에서 제거하고 이자리에는 Undefined 가 남음
+
+					break;
+					return;
+
+				}
+
+			}
+
+		}
+
+*/
+
+			
+		// 부딪히지 않고 화면 밖으로 나가면
+		if( ( parseInt( this.img.style.left ) > parseInt( this.map.style.width )+10 ) || ( parseInt( this.img.style.left ) < -parseInt( this.map.style.width - this.map.style.width -this.img.style.left )-10 ) || ( parseInt( this.img.style.top ) > parseInt( this.map.style.height ) ) ){
+
+			//alert("저 자살할게요");
+
+			clearTimeout(this.st);
+			this.map.removeChild(this.img);
+			return;
+
+		}
 
 	}
 

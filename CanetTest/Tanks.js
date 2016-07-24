@@ -23,9 +23,9 @@ var laserTank = function(){
 
 	this.img;
 	this.tankImg="../images/tank.png";
-	this.damage1=300;
-	this.damage2=100;
-	this.distance=50;
+	this.damage1=180;
+	this.damage2=450;
+	this.distance=200;
 	this.fireAngle=40;
 	this.defense=20;
 	this.fireImg;
@@ -41,14 +41,14 @@ var octopusTank = function(){
 
 	this.img;
 	this.src="../images/tank.png";
-	this.damage1=300;
-	this.damage2=100;
-	this.distance=50;
-	this.fireAngle=40;
-	this.defense=20;
+	this.damage1=180;
+	this.damage2=250;
+	this.distance=250;
+	this.fireAngle=50;
+	this.defense=15;
 	this.fireImg;
 	this.hitImg;
-	this.hp=1200;
+	this.hp=1300;
 	this.bulletImg1="../images/bullet.png";
 	this.bulletImg2="../images/bullet.png";
 
@@ -59,32 +59,32 @@ var starTank = function(){
 
 	this.img;
 	this.src="../images/tank.png";
-	this.damage1=300;
-	this.damage2=100;
-	this.distance=50;
-	this.fireAngle=40;
-	this.defense=20;
+	this.damage1=220;
+	this.damage2=300;
+	this.distance=180;
+	this.fireAngle=70;
+	this.defense=25;
 	this.fireImg;
 	this.hitImg;
-	this.hp=1200;
+	this.hp=1100;
 	this.bulletImg1="../images/bullet.png";
 	this.bulletImg2="../images/bullet.png";
 
 }
 
 
-var multiTank = function(){
+var missileTank = function(){
 
 	this.img;
 	this.src="../images/tank.png";
-	this.damage1=300;
-	this.damage2=100;
-	this.distance=50;
+	this.damage1=150;
+	this.damage2=230;
+	this.distance=190;
 	this.fireAngle=40;
-	this.defense=20;
+	this.defense=15;
 	this.fireImg;
 	this.hitImg;
-	this.hp=1200;
+	this.hp=1400;
 	this.bulletImg1="../images/bullet.png";
 	this.bulletImg2="../images/bullet.png";
 
@@ -96,13 +96,13 @@ var cannonTank = function(){
 	this.img;
 	this.src="../images/tank.png";
 	this.damage1=300;
-	this.damage2=100;
-	this.distance=50;
-	this.fireAngle=40;
+	this.damage2=500;
+	this.distance=150;
+	this.fireAngle=70;
 	this.defense=20;
 	this.fireImg;
 	this.hitImg;
-	this.hp=1200;
+	this.hp=1100;
 	this.bulletImg1="../images/bullet.png";
 	this.bulletImg2="../images/bullet.png";
 

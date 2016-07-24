@@ -16,19 +16,21 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+var theCastleMap = function(){
 
-var overTheCloudMap = function(){
-
-	this.bgmSrc='../music/OnceInALifetime.mp3';
+	this.bgmSrcS="../music/TheresSomethingAboutSupertank.mp3";
+	this.bgmSrcM="../music/BeHigher.mp3";
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
 
 }
 
-var onThePlanetMap = function(){
 
-	this.bgmSrc='../music/OnceInALifetime.mp3';
+var overTheCloudMap = function(){
+
+	this.bgmSrcS="../music/OnceInALifetime.mp3";
+	this.bgmSrcM="../music/LifeIsSoBeautiful.mp3";
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
@@ -38,7 +40,19 @@ var onThePlanetMap = function(){
 
 var theRuinedCityMap = function(){
 
-	this.bgmSrc='../music/OnceInALifetime.mp3';
+	this.bgmSrcS="../music/TheProfound.mp3";
+	this.bgmSrcM="../music/TheProfound.mp3";
+	this.bgSrc="../images/space1.jpg";
+	this.blockImg="../images/block.png";
+	this.windImg="../images/enemyship.png";
+
+}
+
+
+var onThePlanetMap = function(){
+
+	this.bgmSrcS="../music/TempTime.mp3";
+	this.bgmSrcM="../music/TempTime.mp3";
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
@@ -48,7 +62,8 @@ var theRuinedCityMap = function(){
 
 var theNightMap = function(){
 
-	this.bgmSrc='../music/OnceInALifetime.mp3';
+	this.bgmSrcS="../music/WhenSkullMetTheGoldCrown.mp3";
+	this.bgmSrcM="../music/WhenSkullMetTheGoldCrown.mp3";
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
@@ -56,13 +71,6 @@ var theNightMap = function(){
 }
 
 
-var theCastleMap = function(){
 
-	this.bgmSrc='../music/OnceInALifetime.mp3';
-	this.bgSrc="../images/space1.jpg";
-	this.blockImg="../images/block.png";
-	this.windImg="../images/enemyship.png";
-
-}
 
 

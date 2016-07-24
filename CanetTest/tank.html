@@ -11,16 +11,8 @@
 
 <style>
 
-#map{
-
-	position : relative;
-
-}
-
 #mask{
 
-	width : 1240px;
-	height : 900px;
 	overflow : hidden;
 	border : 1px solid red;
 
@@ -43,7 +35,7 @@
 <script src="./SignIn.js"></script>
 <script>
 
-var stage;
+var wrapper;
 var map;
 
 var s_wid=1240;
@@ -51,10 +43,7 @@ var s_hei=900;
 
 
 //	창 관련 div 선언
-var s_win;
-var n_win;
-var sel_mode;
-var sel_con;
+
 
 
 // map들 선언
@@ -64,24 +53,12 @@ var theRuinedCityMap= new theRuinedCityMap();
 var theNightMap= new theNightMap();
 var theCastleMap= new theCastleMap();
 
-// map 속성 선언
-var bgmSrc;
-var bgSrc;
-var blockImg;
-var windImg;
-
-
-//	맵의 블럭 함수 선언
-var stBlock;
-
-
-
 
 // tank들 선언
 var laserTank= new laserTank();
 var octopusTank= new octopusTank();
 var starTank= new starTank();
-var multiTank= new multiTank();
+var missileTank= new missileTank();
 var cannonTank= new cannonTank();
 
 
@@ -98,21 +75,19 @@ var tankFn;
 var mapFn;
 var itemFn;
 var tankMove;
-var bullet;
-
-
-
-
-
+var bulletFn;
 
 
 var side=true;
 
 var blockArr = new Array();
 
+var mapLeft;
+var mapTop;
 
-var x=10;
-var y=10;
+
+var birthX=10;
+var birthY=10;
 var tankWidth=70;
 var tankHeight=70;
 var velX=0;
@@ -122,32 +97,46 @@ var shotPw=0;
 
 var speed=0;
 
+var count=1;
+
 var key;
+
 
 
 window.addEventListener("load", function(){
 
 	init();
 
-	
-
 });
 
 function init(){
 
-	stage = document.getElementById("stage");
+	
+	wrapper = document.getElementById("wrapper");
+	mask = document.getElementById("mask");
 	map = document.getElementById("map");
+	
+	mask.style.width=1240+"px";
+	mask.style.height=900+"px";
+	mask.style.margin="auto";
 
 	map.style.width=3000+"px";
 	map.style.height=2000+"px";
+	map.style.position="relative";
+
+	//moveMap();
+
+
+
+
+
+
+
+	startWin = new StartWin(map, s_wid, s_hei);
+
+	startWin.init();
+
 /*
-
-	s_win = new StartWin(map, s_wid, s_hei);
-
-	s_win.init();
-
-
-
 	n_win = new noticeWin( map, s_wid, s_hei );
 
 	n_win.init();
@@ -169,20 +158,24 @@ function init(){
 	sel_con.init();
 
 
+
+
 */
 
 
-	tankFn = new tankFn(map, x, y, tankWidth, tankHeight, velX, velY, gravity, laserTank.distance, laserTank.fireAngle, laserTank.defense, laserTank.hp);
+
+	tankFn = new tankFn(map, birthX, birthY, tankWidth, tankHeight, velX, velY, gravity, laserTank.distance, laserTank.fireAngle, laserTank.defense, laserTank.hp);
 
 	tankFn.init();
 
-	mapFn = new mapFn( map, blockArr, overTheCloudMap.bgSrc, overTheCloudMap.bgmSrc, overTheCloudMap.blockImg );
+	mapFn = new mapFn( map, blockArr, overTheCloudMap.bgSrc, overTheCloudMap.bgmSrcS, overTheCloudMap.blockImg );
 
 	mapFn.init();
 
-
+	
 
 }
+
 
 
 window.addEventListener("keydown", function(){
@@ -193,11 +186,17 @@ window.addEventListener("keydown", function(){
 		
 		case 32:
 
-			tankMove(0);
+			if( count==1 ){
 
-			bullet = new bulletFn(map, tankFn.x, tankFn.y, gravity, 5, 5, side, laserTank.bulletImg1, laserTank.bulletImg2, laserTank.damage1, laserTank.damage2);
+				tankMove(0);
 
-			bullet.init();
+				bulletFn = new bulletFn(map, tankFn.x, tankFn.y, gravity, 5, 5, side, laserTank.bulletImg1, laserTank.bulletImg2, laserTank.damage1, laserTank.damage2);
+	
+				bulletFn.init();
+
+				count--;
+
+			}
 			
 			break;//스페이스바
 		
@@ -205,7 +204,11 @@ window.addEventListener("keydown", function(){
 
 			side=false;
 
-			tankMove(-2);
+			if( count==1 ){
+
+				tankMove(-2);
+
+			}
 
 			tankFn.img.style.transform="rotateY(180deg)";
 			
@@ -215,7 +218,11 @@ window.addEventListener("keydown", function(){
 
 			side=true;
 
-			tankMove(2);
+			if( count==1 ){
+
+				tankMove(2);
+
+			}
 
 			tankFn.img.style.transform="rotateY(0deg)";
 			
@@ -240,40 +247,35 @@ window.addEventListener("keyup", function(){
 
 });
 
-
-
-function gameProcess(){
-
-
-
-}
-
 /*
 
 
-stage.addEventListener("keydown", function(){
-	var key=event.keyCode;
+function moveMap(){
 
-	switch(key){
-		case 32:fire();break; //space bar
-		case 37:go(-2);break;
-		case 39:go(2);break;
-	}		
-});
+	window.addEventListener("mousemove", function(){
 
-stage.addEventListener("keyup", function(){
-	
-	var key=event.keyCode;
+		entX=event.clientX;
+		entY=event.clientY;
 
-	if(key==37 || key==39){
-		tankmove.velX=0;
-		step=0;
-		rockman.running=false;
-	}
-});
+		var x=10;
+		
+
+		while( entX > 1240 ){
+
+			mapLeft-=x;
+
+			map.style.left=-mapLeft+"px";
+			map.style.top=-100+"px";
+
+			return;
+
+		}
+
+	});
+
+}
 
 */
-
 
 </script>
 
@@ -282,7 +284,7 @@ stage.addEventListener("keyup", function(){
  </head>
  <body>
 
-<div id="stage">
+<div id="wrapper">
 
 	<div id="mask">
 
