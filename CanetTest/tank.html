@@ -22,7 +22,7 @@
 
 </style>
 
-
+<script src="./GameProcess.js"></script>
 <script src="./Windows.js"></script>
 <script src="./SelectBox.js"></script>
 <script src="./TankFn.js"></script>
@@ -33,6 +33,7 @@
 <script src="./Maps.js"></script>
 <script src="./Items.js"></script>
 <script src="./SignIn.js"></script>
+
 <script>
 
 var wrapper;
@@ -43,7 +44,15 @@ var s_hei=900;
 
 
 //	창 관련 div 선언
-
+var startWin;
+var noticeWin;
+var logIn;
+var selectMode;
+var selectContents;
+var itemShop;
+var loadGame;
+var gameRank;
+var gameWinner;
 
 
 // map들 선언
@@ -80,6 +89,16 @@ var bulletFn;
 
 var side=true;
 
+var isStartWin;
+var isLogIn;
+var isNoticeWin;
+var isSelectMode;
+var isSelectContents;
+var isItemShop;
+var isLoadGame;
+var isGameWinner;
+
+
 var blockArr = new Array();
 
 var mapLeft;
@@ -114,7 +133,8 @@ function init(){
 	
 	wrapper = document.getElementById("wrapper");
 	mask = document.getElementById("mask");
-	map = document.getElementById("map");
+	map = document.createElement("div");
+	gameWin = document.createElement("div");
 	
 	mask.style.width=1240+"px";
 	mask.style.height=900+"px";
@@ -124,17 +144,13 @@ function init(){
 	map.style.height=2000+"px";
 	map.style.position="relative";
 
+	gameWin.style.width=1240+"px";
+	gameWin.style.height=900+"px";
+	gameWin.style.position="relative";
+
 	//moveMap();
 
-
-
-
-
-
-
-	startWin = new StartWin(map, s_wid, s_hei);
-
-	startWin.init();
+	
 
 /*
 	n_win = new noticeWin( map, s_wid, s_hei );
@@ -143,34 +159,34 @@ function init(){
 
 */	
 
-/*	
 
-	sel_mode = new selectMode( map, s_wid, s_hei);
+/*
+
+	sel_mode = new selectMode( mask, gameWin, s_wid, s_hei);
 
 	sel_mode.init();
 
 
-*/	
-/*
 
-	sel_con = new selectContents( map, s_wid, s_hei );
+
+	sel_con = new selectContents( mask, gameWin, s_wid, s_hei );
 
 	sel_con.init();
-
-
-
 
 */
 
 
+	gameProcess();
 
-	tankFn = new tankFn(map, birthX, birthY, tankWidth, tankHeight, velX, velY, gravity, laserTank.distance, laserTank.fireAngle, laserTank.defense, laserTank.hp);
 
-	tankFn.init();
 
-	mapFn = new mapFn( map, blockArr, overTheCloudMap.bgSrc, overTheCloudMap.bgmSrcS, overTheCloudMap.blockImg );
+	//tankFn = new tankFn(map, birthX, birthY, tankWidth, tankHeight, velX, velY, gravity, laserTank.distance, laserTank.fireAngle, laserTank.defense, laserTank.hp);
 
-	mapFn.init();
+	//tankFn.init();
+
+	//mapFn = new mapFn( map, blockArr, overTheCloudMap.bgSrc, overTheCloudMap.bgmSrcS, overTheCloudMap.blockImg );
+
+	//mapFn.init();
 
 	
 
@@ -246,6 +262,218 @@ window.addEventListener("keyup", function(){
 	}
 
 });
+
+
+
+var gameProcess = function(){
+
+	startWin = new startWin(mask, gameWin, s_wid, s_hei);
+	logIn = new logIn(mask, gameWin, s_wid, s_hei);
+	noticeWin = new noticeWin(mask, gameWin, s_wid, s_hei);
+	selectMode = new selectMode(mask, gameWin, s_wid, s_hei);
+	selectContents = new selectContents(mask, gameWin, s_wid, s_hei);
+	itemShop = new itemShop(mask, gameWin, s_wid, s_hei);
+	loadGame = new loadGame(mask, gameWin, s_wid, s_hei);
+	gameWinner = new gameWinner(mask, gameWin, s_wid, s_hei);
+
+	isStartWin=true;
+	isLogIn=false;
+	isNoticeWin=false;
+	isSelectMode=false;
+	isSelectContents=false;
+	isItemShop=false;
+	isLoadGame=false;
+	isGameWinner=false;
+
+	startWin.init();
+
+	if( isStartWin ){
+		
+		window.addEventListener("click", function(){
+
+			startWin.clear();
+			
+			isStartWin=false;
+			
+			isLogIn=true;
+
+		}
+
+	}
+
+}
+
+
+/*
+	if( isStartWin ){
+
+		startWin.init();
+
+		window.addEventListener("click", function(){
+
+			startWin.clear();
+
+			logIn.init();
+			
+			isStartWin=false;
+			
+			isLogIn=true;
+
+			
+			if( isLogIn ){
+
+				logIn.btLogIn.addEventListener("click", function(){
+
+				if( logIn.idBox.value=="" ){
+
+					alert("아이디를 입력해야지!!");
+					
+					logIn.idBox.focus();
+
+					return;
+
+				}else if( logIn.pwBox.value=="" ){
+
+					alert("패스워드는 왜 빼먹어?");
+					
+					logIn.idBox.focus();
+
+					return;
+
+				}else{
+
+					logIn.clear();
+
+					noticeWin.init();
+
+					isLogIn=false;
+
+					isNoticeWin=true;
+
+				}
+	
+				if( isNoticeWin ){
+
+					noticeWin.btBack.addEventListener("click", function(){
+
+						noticeWin.clear();
+
+						logIn.init();
+
+						isNoticeWin=false;
+
+						isLogIn=true;
+
+					});
+
+					noticeWin.btStart.addEventListener("click", function(){
+
+						noticeWin.clear();
+
+						selectMode.init();
+
+						isNoticeWin=false;
+
+						isSelectMode=true;
+
+					});
+
+				}
+
+			});
+
+			}
+
+		});
+
+	}
+
+}
+
+
+				}else if(isSelectMode ){
+
+				}else if( isSelectContents ){
+
+				}else if( isItemShop ){
+
+				}else if( isLoadGame ){
+
+				}else if( isGameWinner ){
+
+				}
+
+			}
+
+*/
+		/*
+
+		logIn.btLogIn.addEventListener("click", function(){
+
+			if( isLogIn ){
+
+				if( logIn.idBox.value=="" ){
+
+					alert("아이디를 입력해야지!!");
+					
+					logIn.idBox.focus();
+
+					return;
+
+				}else if( logIn.pwBox.value=="" ){
+
+					alert("패스워드는 왜 빼먹어?");
+					
+					logIn.idBox.focus();
+
+					return;
+
+				}else{
+
+					logIn.clear();
+
+					noticeWin.init();
+
+					isLogIn=false;
+
+				}
+
+			}
+
+
+			noticeWin.btBack.addEventListener("click", function(){
+
+				noticeWin.clear();
+
+				logIn.init();
+
+				isNoticeWin=false;
+
+				isLogIn=true;
+
+			});
+
+			noticeWin.btStart.addEventListener("click", function(){
+
+				if( isNoticeWin ){
+
+					noticeWin.clear();
+
+					selectMode.init();
+
+					isNoticeWin=false;
+
+				}
+			
+			});
+		
+		});
+
+	});	
+
+}
+
+*/
 
 /*
 

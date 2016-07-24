@@ -22,13 +22,14 @@
 ////////////////////////////////////////////////////////////////////////
 //	시작 시 뜰 화면을 표시
 ////////////////////////////////////////////////////////////////////////
-var StartWin = function ( wrapper, stageW, stageH  ){			// stage로부터 stage와 stage의 높이 stage의 넓이를 받는다
+var startWin = function ( mask, gameWin, stageW, stageH  ){			// stage로부터 stage와 stage의 높이 stage의 넓이를 받는다
 
-	this.wrapper=wrapper;
+	this.mask=mask;
+	this.gameWin=gameWin;
 	this.stage;
 	this.width=stageW;
 	this.height=stageH;
-	
+	var me = this; 
 
 	this.init = function(){
 
@@ -45,7 +46,309 @@ var StartWin = function ( wrapper, stageW, stageH  ){			// stage로부터 stage�
 
 		this.stage.style.backgroundImage="url('../images/space1.jpg')";							//	배경이미지 소스
 
-		this.wrapper.appendChild(this.stage);
+		this.gameWin.appendChild(this.stage);
+
+		this.mask.appendChild(this.gameWin);
+
+		this.mask.addEventListener("click", function(){
+
+			me.clear();
+
+			logIn.init();
+		
+		});
+
+	}
+
+	this.clear = function(){
+
+		this.audio.clear();
+
+		this.gameWin.removeChild(this.stage);
+
+		this.mask.removeChild(this.gameWin);
+
+	}
+
+}
+
+
+////////////////////////////////////////////////////////////////////////
+//	회원가입, 로그인 화면
+////////////////////////////////////////////////////////////////////////
+
+var logIn = function( mask, gameWin, stageW, stageH ){
+
+	this.mask=mask;
+	this.gameWin=gameWin;
+	this.stage;
+	this.logInForm;
+	this.idBox;
+	this.pwBox;
+	this.btLogIn;
+	this.btSignIn;
+	this.btSubmit;
+	this.btExit;
+	this.btBack;
+	this.width=stageW;
+	this.height=stageH;
+	this.isFine=false;
+
+	var me = this;
+	
+
+	this.init = function(){
+
+		this.audio = new audioCtrl('../music/logIn.mp3');
+
+		this.audio.init();
+
+		this.stage = document.createElement("div");
+		this.logInForm = document.createElement("div");
+		this.signInForm = document.createElement("div");
+		this.idBox = document.createElement("input");
+		this.pwBox = document.createElement("input");
+		this.btLogIn = document.createElement("input");
+		this.btSignIn = document.createElement("input");
+		this.btSubmit = document.createElement("input");
+		this.btBack = document.createElement("input");
+		this.btExit = document.createElement("input");
+		
+
+		this.stage.style.width=this.width+"px";
+		this.stage.style.height=this.height+"px";
+		this.stage.style.margin=0+"px";
+		this.stage.style.position="absolute";
+		this.stage.style.backgroundImage="url('../images/f1.png')";
+
+		this.logInForm.style.width=this.width/2+"px";
+		this.logInForm.style.height=this.height/2+"px";
+		this.logInForm.style.margin="auto";
+		this.logInForm.style.position="absolute";
+		this.logInForm.style.left=this.width/4+"px";
+		this.logInForm.style.top=this.height/4+"px";
+		this.logInForm.style.backgroundImage="url('../images/f3.jpg')";
+		this.logInForm.style.textAlign="center";
+
+		this.signInForm.style.width=this.width/2+"px";
+		this.signInForm.style.height=this.height/2+"px";
+		this.signInForm.style.margin="auto";
+		this.signInForm.style.position="absolute";
+		this.signInForm.style.left=this.width/4+"px";
+		this.signInForm.style.top=this.height/4+"px";
+		this.signInForm.style.backgroundImage="url('../images/f2.jpg')";
+		this.signInForm.style.textAlign="center";
+
+		this.idBox.type="text";
+		this.idBox.style.width=400+"px";
+		this.idBox.style.height=70+"px";
+		this.idBox.style.position="absolute";
+		this.idBox.style.margin="auto";
+		this.idBox.style.left=this.width/6+"px";
+		this.idBox.style.top=this.height/7+"px";
+		this.idBox.style.fontSize="36pt";
+
+		this.pwBox.type="password";
+		this.pwBox.style.width=400+"px";
+		this.pwBox.style.height=70+"px";
+		this.pwBox.style.position="absolute";
+		this.pwBox.style.margin="auto";
+		this.pwBox.style.left=this.width/6+"px";
+		this.pwBox.style.top=this.height/7+80+"px";
+		this.pwBox.style.fontSize="36pt";
+
+		this.btLogIn.type="button";
+		this.btLogIn.style.width=200+"px";
+		this.btLogIn.style.height=70+"px";
+		this.btLogIn.style.position="absolute";
+		this.btLogIn.style.margin="auto";
+		this.btLogIn.style.left=40+"px";
+		this.btLogIn.style.top=this.height/7+200+"px";
+		this.btLogIn.value="LogIn";
+		this.btLogIn.style.fontSize="36pt";
+
+		this.btSignIn.type="button";
+		this.btSignIn.style.width=200+"px";
+		this.btSignIn.style.height=70+"px";
+		this.btSignIn.style.position="absolute";
+		this.btSignIn.style.margin="auto";
+		this.btSignIn.style.left=400+"px";
+		this.btSignIn.style.top=this.height/7+200+"px";
+		this.btSignIn.value="SignIn";
+		this.btSignIn.style.fontSize="36pt";
+
+		this.btBack.type="button";
+		this.btBack.style.width=200+"px";
+		this.btBack.style.height=70+"px";
+		this.btBack.style.position="absolute";
+		this.btBack.style.margin="auto";
+		this.btBack.style.left=40+"px";
+		this.btBack.style.top=this.height/7+200+"px";
+		this.btBack.value="Back";
+		this.btBack.style.fontSize="36pt";
+
+		this.btSubmit.type="button";
+		this.btSubmit.style.width=200+"px";
+		this.btSubmit.style.height=70+"px";
+		this.btSubmit.style.position="absolute";
+		this.btSubmit.style.margin="auto";
+		this.btSubmit.style.left=400+"px";
+		this.btSubmit.style.top=this.height/7+200+"px";
+		this.btSubmit.value="Submit";
+		this.btSubmit.style.fontSize="36pt";
+
+		this.btExit.type="button";
+		this.btExit.style.width=150+"px";
+		this.btExit.style.height=70+"px";
+		this.btExit.style.position="absolute";
+		this.btExit.style.margin="auto";
+		this.btExit.style.left=this.width-200+"px";
+		this.btExit.style.top=this.height-120+"px";
+		this.btExit.value="Exit";
+		this.btExit.style.fontSize="36pt";
+
+		this.logInForm.appendChild(this.idBox);
+		this.logInForm.appendChild(this.pwBox);
+		this.logInForm.appendChild(this.btLogIn);
+		this.logInForm.appendChild(this.btSignIn);
+
+		this.stage.appendChild(this.logInForm);
+		this.stage.appendChild(this.btExit);
+		this.gameWin.appendChild(this.stage);
+		this.mask.appendChild(this.gameWin);
+
+/*
+
+		this.btLogIn.addEventListener("click", function(){
+
+			if( me.idBox.value=="" ){
+
+				alert("아이디를 입력해야지!!");
+				
+				me.idBox.focus();
+
+				return;
+
+			}else if( me.pwBox.value=="" ){
+
+				alert("패스워드는 왜 빼먹어?");
+				
+				me.idBox.focus();
+
+				return;
+
+			}else{
+
+				me.isFine=true;
+
+				return me.isFine;
+
+			}
+		
+		});
+
+*/
+
+
+		this.btSignIn.addEventListener("click", function(){
+
+			me.stage.removeChild(me.logInForm);
+
+			me.idBox.value="";
+			me.pwBox.value="";
+
+			me.signInForm.appendChild(me.idBox);
+			me.signInForm.appendChild(me.pwBox);
+			me.signInForm.appendChild(me.btBack);
+			me.signInForm.appendChild(me.btSubmit);
+
+			me.stage.appendChild(me.signInForm);
+		
+		});
+
+		this.btBack.addEventListener("click", function(){
+
+			var con = confirm("정말 취소할거임?");
+
+			if( con ){
+
+				me.stage.removeChild(me.signInForm);
+
+				me.logInForm.appendChild(me.idBox);
+				me.logInForm.appendChild(me.pwBox);
+				me.logInForm.appendChild(me.btLogIn);
+				me.logInForm.appendChild(me.btSignIn);
+
+				me.stage.appendChild(me.logInForm);
+
+				me.idBox.value="";
+				me.pwBox.value="";
+
+			}
+
+		});
+
+
+
+		this.btSubmit.addEventListener("click", function(){
+
+			if( me.idBox.value=="" ){
+
+				alert("아이디를 입력해야지!!");
+				
+				me.idBox.focus();
+
+				return;
+
+			}else if( me.pwBox.value=="" ){
+
+				alert("패스워드는 왜 빼먹어?");
+				
+				me.idBox.focus();
+
+				return;
+
+			}else{
+
+				alert(me.idBox.value+"의 가입을 축하해!!");
+
+				me.stage.removeChild(me.signInForm);
+
+				me.logInForm.appendChild(me.idBox);
+				me.logInForm.appendChild(me.pwBox);
+				me.logInForm.appendChild(me.btLogIn);
+				me.logInForm.appendChild(me.btSignIn);
+
+				me.stage.appendChild(me.logInForm);
+
+			}
+
+			me.idBox.value="";
+			me.pwBox.value="";
+		
+		});
+
+		this.btExit.addEventListener("click", function(){
+
+			var con = confirm("정말 종료할거임?");
+
+			if( con ){
+
+				close();
+
+			}
+		
+		});
+	
+	}
+
+	this.clear = function(){
+
+		this.audio.clear();
+
+		this.gameWin.removeChild(this.stage);
+
+		this.mask.removeChild(this.gameWin);
 
 	}
 
@@ -57,13 +360,18 @@ var StartWin = function ( wrapper, stageW, stageH  ){			// stage로부터 stage�
 ////////////////////////////////////////////////////////////////////////
 
 
-var noticeWin = function( stage, stageW, stageH ){
+var noticeWin = function( mask, gameWin, stageW, stageH ){
 
-	this.stage=stage;
-	this.div_wrapper;
+	this.mask=mask;
+	this.gameWin=gameWin;
+	this.stage;
 	this.width=stageW;
 	this.height=stageH;
-	
+
+	this.noticeStage;
+	this.btStart;
+	this.btBack;
+	this.btExit;
 
 	this.init = function(){
 
@@ -71,64 +379,115 @@ var noticeWin = function( stage, stageW, stageH ){
 
 		this.audio.init();
 
-		this.div_wrapper = document.createElement("div");
+		this.stage = document.createElement("div");
+		this.noticeStage = document.createElement("textarea");
+		this.btStart = document.createElement("input");
+		this.btBack = document.createElement("input");
+		this.btExit = document.createElement("input");
 
-		this.div_wrapper.style.width=this.width+"px";
-		this.div_wrapper.style.height=this.height+"px";
-		this.div_wrapper.style.margin=0+"px";
-		this.div_wrapper.style.position="absolute";
+		this.stage.style.width=this.width+"px";
+		this.stage.style.height=this.height+"px";
+		this.stage.style.margin=0+"px";
+		this.stage.style.position="absolute";
+		this.stage.style.backgroundImage="url('../images/f4.jpg')";
+		this.stage.style.textAlign="center";
 
-		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
+		this.noticeStage.style.width=this.width*4/5+"px";
+		this.noticeStage.style.height=this.height*2/3+"px";
+		this.noticeStage.style.margin="auto";
+		this.noticeStage.style.position="absolute";
+		this.noticeStage.style.left=this.width/10+"px";
+		this.noticeStage.style.top=this.height/10+"px";
+		this.noticeStage.style.backgroundImage="url('../images/f3.jpg')";
+		this.noticeStage.style.fontSize="30pt";
+		this.noticeStage.style.fontWeight="bold";
+		this.noticeStage.style.color="silver";
+		this.noticeStage.disabled=true;
+		this.noticeStage.value="안녕";
 
-		this.stage.appendChild(this.div_wrapper);
+
+		//this.noticeStage.style.textAlign="center";
+
+		this.btStart.type="button";
+		this.btStart.style.width=150+"px";
+		this.btStart.style.height=70+"px";
+		this.btStart.style.position="absolute";
+		this.btStart.style.margin="auto";
+		this.btStart.style.left=50+"px";
+		this.btStart.style.top=this.height-120+"px";
+		this.btStart.value="Start";
+		this.btStart.style.fontSize="36pt";
+
+		this.btBack.type="button";
+		this.btBack.style.width=150+"px";
+		this.btBack.style.height=70+"px";
+		this.btBack.style.position="absolute";
+		this.btBack.style.margin="auto";
+		this.btBack.style.left=this.width-370+"px";
+		this.btBack.style.top=this.height-120+"px";
+		this.btBack.value="Back";
+		this.btBack.style.fontSize="36pt";
+
+		this.btExit.type="button";
+		this.btExit.style.width=150+"px";
+		this.btExit.style.height=70+"px";
+		this.btExit.style.position="absolute";
+		this.btExit.style.margin="auto";
+		this.btExit.style.left=this.width-200+"px";
+		this.btExit.style.top=this.height-120+"px";
+		this.btExit.value="Exit";
+		this.btExit.style.fontSize="36pt";
+
+		this.stage.appendChild(this.noticeStage);
+		this.stage.appendChild(this.btStart);
+		this.stage.appendChild(this.btBack);
+		this.stage.appendChild(this.btExit);
+
+		this.gameWin.appendChild(this.stage);
+		this.mask.appendChild(this.gameWin);
+
+		this.btExit.addEventListener("click", function(){
+
+			var con = confirm("정말 종료할거임?");
+
+			if( con ){
+
+				close();
+
+			}
+		
+		});
 	
+	}
+
+	this.clear = function(){
+
+		this.audio.clear();
+
+		//this.stage.removeChild(this.noticeStage);
+		//this.stage.removeChild(this.btStart);
+		//this.stage.removeChild(this.btBack);
+		//this.stage.removeChild(this.btExit);
+
+		this.gameWin.removeChild(this.stage);
+
+		this.mask.removeChild(this.gameWin);
+
 	}
 
 }
 
-
-////////////////////////////////////////////////////////////////////////
-//	회원가입, 로그인 화면
-////////////////////////////////////////////////////////////////////////
-
-var logIn = function( stage, stageW, stageH ){
-
-	this.stage=stage;
-	this.div_wrapper;
-	this.width=stageW;
-	this.height=stageH;
-	this.audio;
-	
-
-	this.init = function(){
-
-		this.audio = new audioCtrl('../music/logIn.mp3');
-
-		this.audio.init();
-
-		this.div_wrapper = document.createElement("div");
-
-		this.div_wrapper.style.width=this.width+"px";
-		this.div_wrapper.style.height=this.height+"px";
-		this.div_wrapper.style.margin=0+"px";
-		this.div_wrapper.style.position="absolute";
-
-		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
-
-		this.stage.appendChild(this.div_wrapper);
-	
-	}
-
-}
 
 
 
 ////////////////////////////////////////////////////////////////////////
 //	플레이어 선택 화면
 ////////////////////////////////////////////////////////////////////////
-var selectMode = function( stage, stageW, stageH ){			// stage로부터 stage와 stage의 높이 stage의 넓이를 받는다
+var selectMode = function( mask, gameWin, stageW, stageH ){			// stage로부터 stage와 stage의 높이 stage의 넓이를 받는다
 
-	this.div_wrapper;
+	this.mask=mask;
+	this.gameWin=gameWin;
+	this.stage;
 	this.div_up;
 	this.div_mul;
 	this.div_sing;
@@ -136,7 +495,6 @@ var selectMode = function( stage, stageW, stageH ){			// stage로부터 stage와
 	this.img_mul;									//	멀티플레이 버튼에 들어갈 이미지
 	this.img_sing;									//	싱글플레이 버튼에 들어갈 이미지
 	this.img_bg;										//	배경에 넣을 이미지
-	this.stage=stage;
 	this.width=stageW;
 	this.height=stageH;
 	this.bt_mul;										//	멀티플레이 선택 버튼
@@ -149,7 +507,7 @@ var selectMode = function( stage, stageW, stageH ){			// stage로부터 stage와
 
 		this.audio.init();
 
-		this.div_wrapper = document.createElement("div");				//	버튼들을 넣을 div
+		this.stage = document.createElement("div");				//	버튼들을 넣을 div
 		this.div_down = document.createElement("div");
 		this.div_mul = document.createElement("div");
 		this.div_sing = document.createElement("div");
@@ -163,10 +521,10 @@ var selectMode = function( stage, stageW, stageH ){			// stage로부터 stage와
 	
 	
 
-		this.div_wrapper.style.width=this.width+"px";									//	div_wrapper의 style 정의
-		this.div_wrapper.style.height=this.height+"px";
-		this.div_wrapper.style.margin="0px";
-		this.div_wrapper.style.position="absolute";
+		this.stage.style.width=this.width+"px";									//	div_wrapper의 style 정의
+		this.stage.style.height=this.height+"px";
+		this.stage.style.margin="0px";
+		this.stage.style.position="absolute";
 
 		this.div_mul.style.width=this.width/2+"px";									//	div_mul의 style 정의
 		this.div_mul.style.height=this.height*3/4+"px";
@@ -202,11 +560,12 @@ var selectMode = function( stage, stageW, stageH ){			// stage로부터 stage와
 		this.div_mul.appendChild(this.bt_mul);									//	버튼들을 div에 갖다 붙임
 		this.div_sing.appendChild(this.bt_sing);
 
-		this.div_wrapper.appendChild(this.div_mul);
-		this.div_wrapper.appendChild(this.div_sing);
-		this.div_wrapper.appendChild(this.div_down);
+		this.stage.appendChild(this.div_mul);
+		this.stage.appendChild(this.div_sing);
+		this.stage.appendChild(this.div_down);
 
-		this.stage.appendChild(this.div_wrapper);
+		this.gameWin.appendChild(this.stage);
+		this.mask.appendChild(this.gameWin);
 
 
 	}
@@ -215,13 +574,13 @@ var selectMode = function( stage, stageW, stageH ){			// stage로부터 stage와
 }
 
 
-var selectContents = function(stage, stageW, stageH){
+var selectContents = function( mask, gameWin, stageW, stageH ){
 
-	this.stage=stage;
+	this.mask=mask;
+	this.gameWin=gameWin;
+	this.stage;
 	this.width=stageW;
 	this.height=stageH;
-
-	this.div_wrapper;
 
 	this.div_showP1;
 	this.div_showP2;
@@ -243,7 +602,7 @@ var selectContents = function(stage, stageW, stageH){
 
 		this.audio.init();
 
-		this.div_wrapper = document.createElement("div");
+		this.stage = document.createElement("div");
 
 		this.div_showP1 = document.createElement("div");
 		this.div_showP2 = document.createElement("div");
@@ -263,10 +622,10 @@ var selectContents = function(stage, stageW, stageH){
 
 		//this.div_showP1.style.border="1px solid red";
 
-		this.div_wrapper.style.width=this.width+"px";									//	div_wrapper의 style 정의
-		this.div_wrapper.style.height=this.height+"px";
-		this.div_wrapper.style.margin="0px";
-		this.div_wrapper.style.position="absolute";
+		this.stage.style.width=this.width+"px";									//	div_wrapper의 style 정의
+		this.stage.style.height=this.height+"px";
+		this.stage.style.margin="0px";
+		this.stage.style.position="absolute";
 
 
 		this.div_showP1.style.width=this.width/3+"px";									//	div_mul의 style 정의
@@ -363,12 +722,13 @@ var selectContents = function(stage, stageW, stageH){
 		this.div_down.appendChild(this.div_selMap);
 		this.div_down.appendChild(this.div_selTank);
 
-		this.div_wrapper.appendChild(this.div_showP1);
-		this.div_wrapper.appendChild(this.div_showVs);
-		this.div_wrapper.appendChild(this.div_showP2);
-		this.div_wrapper.appendChild(this.div_down);
+		this.stage.appendChild(this.div_showP1);
+		this.stage.appendChild(this.div_showVs);
+		this.stage.appendChild(this.div_showP2);
+		this.stage.appendChild(this.div_down);
 
-		this.stage.appendChild(this.div_wrapper);
+		this.gameWin.appendChild(this.stage);
+		this.mask.appendChild(this.gameWin);
 
 
 	
@@ -377,13 +737,13 @@ var selectContents = function(stage, stageW, stageH){
 }
 
 
-var itemShop = function( stage, stageW, stageH ){
+var itemShop = function( mask, gameWin, stageW, stageH ){
 
-	this.stage=stage;
-	this.div_wrapper;
+	this.mask=mask;
+	this.gameWin=gameWin;
+	this.stage;
 	this.width=stageW;
 	this.height=stageH;
-	this.audio;
 	
 
 	this.init = function(){
@@ -392,103 +752,82 @@ var itemShop = function( stage, stageW, stageH ){
 
 		this.audio.init();
 
-		this.div_wrapper = document.createElement("div");
+		this.stage = document.createElement("div");
 
-		this.div_wrapper.style.width=this.width+"px";
-		this.div_wrapper.style.height=this.height+"px";
-		this.div_wrapper.style.margin=0+"px";
-		this.div_wrapper.style.position="absolute";
+		this.stage.style.width=this.width+"px";
+		this.stage.style.height=this.height+"px";
+		this.stage.style.margin=0+"px";
+		this.stage.style.position="absolute";
 
-		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
+		this.stage.style.backgroundImage="url('../images/f1.png')";
 
-		this.stage.appendChild(this.div_wrapper);
+		this.gameWin.appendChild(this.stage);
+		this.mask.appendChild(this.gameWin);
 	
 	}
 
 }
 
 
-var loadGame = function( stage, stageW, stageH ){
+var loadGame = function( mask, gameWin, stageW, stageH ){
 
-	this.stage=stage;
-	this.div_wrapper;
+	this.mask=mask;
+	this.gameWin=gameWin;
+	this.stage;
 	this.width=stageW;
 	this.height=stageH;
-
-	this.init = function(){
-
-		this.div_wrapper = document.createElement("div");
-
-		this.div_wrapper.style.width=this.width+"px";
-		this.div_wrapper.style.height=this.height+"px";
-		this.div_wrapper.style.margin=0+"px";
-		this.div_wrapper.style.position="absolute";
-
-		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
-
-		this.stage.appendChild(this.div_wrapper);
-	
-	}
-
-}
-
-
-var gameEnd = function( stage, stageW, stageH ){
-
-	this.stage=stage;
-	this.div_wrapper;
-	this.width=stageW;
-	this.height=stageH;
-	this.audio;
 	
 
 	this.init = function(){
 
-		this.audio = new audioCtrl('../music/selectContents.mp3');
+		this.audio = new audioCtrl('../music/logIn.mp3');
 
 		this.audio.init();
 
-		this.div_wrapper = document.createElement("div");
+		this.stage = document.createElement("div");
 
-		this.div_wrapper.style.width=this.width+"px";
-		this.div_wrapper.style.height=this.height+"px";
-		this.div_wrapper.style.margin=0+"px";
-		this.div_wrapper.style.position="absolute";
+		this.stage.style.width=this.width+"px";
+		this.stage.style.height=this.height+"px";
+		this.stage.style.margin=0+"px";
+		this.stage.style.position="absolute";
 
-		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
+		this.stage.style.backgroundImage="url('../images/f1.png')";
 
-		this.stage.appendChild(this.div_wrapper);
+		this.gameWin.appendChild(this.stage);
+		this.mask.appendChild(this.gameWin);
 	
 	}
 
 }
 
 
-var rankingWin = function( stage, stageW, stageH ){
 
-	this.stage=stage;
-	this.div_wrapper;
+var gameWinner = function( mask, gameWin, stageW, stageH ){
+
+	this.mask=mask;
+	this.gameWin=gameWin;
+	this.stage;
 	this.width=stageW;
 	this.height=stageH;
-	this.audio;
 	
 
 	this.init = function(){
 
-		this.audio = new audioCtrl('../music/selectContents.mp3');
+		this.audio = new audioCtrl('../music/ending.mp3');
 
 		this.audio.init();
 
-		this.div_wrapper = document.createElement("div");
+		this.stage = document.createElement("div");
 
-		this.div_wrapper.style.width=this.width+"px";
-		this.div_wrapper.style.height=this.height+"px";
-		this.div_wrapper.style.margin=0+"px";
-		this.div_wrapper.style.position="absolute";
+		this.stage.style.width=this.width+"px";
+		this.stage.style.height=this.height+"px";
+		this.stage.style.margin=0+"px";
+		this.stage.style.position="absolute";
 
-		this.div_wrapper.style.backgroundImage="url('../images/f1.png')";
+		this.stage.style.backgroundImage="url('../images/f1.png')";
 
-		this.stage.appendChild(this.div_wrapper);
+		this.gameWin.appendChild(this.stage);
+		this.mask.appendChild(this.gameWin);
 	
 	}
 

@@ -91,4 +91,10 @@ var audioCtrl = function( src ){
 
 	}
 
+	this.clear = function(){
+
+		this.audio.pause();
+
+	}
+
 }
