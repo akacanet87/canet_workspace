@@ -38,10 +38,6 @@ var dropItem = function(){						//	아이템 떨어뜨리기
 }
 
 
-var playerLoc = function(){						//	플레이어 초기 위치
-
-}
-
 
 var hitTest = function(me, target) {
  

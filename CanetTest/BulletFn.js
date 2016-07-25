@@ -34,6 +34,8 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 	this.side=side;
 	this.st;
 
+	this.bulletLife=2;
+
 	this.init = function(){
 
 		this.img = document.createElement("img");
@@ -43,8 +45,6 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 		this.img.style.height=25+"px";
 		this.img.style.left=this.x+"px";
 		this.img.style.top=this.y+"px";
-
-		console.log(this.img.src);
 
 		if(this.side){
 			
@@ -69,9 +69,6 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 		}
 
 		this.map.appendChild(this.img);
-
-		console.log( parseInt( this.map.style.width ) );
-
 
 		this.move();
 
@@ -123,6 +120,41 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 					clearTimeout(blockArr[a].st);
 					delete blockArr[a];				//	배열에서 제거하고 이자리에는 Undefined 가 남음
 
+					turn=!turn;
+					count1=!count1;
+					count2=!count2;
+
+					break;
+					return;
+
+				}
+
+			}
+
+		}
+
+
+		for( var a=0 ; a<gameTankArr.length ; a++ ){
+
+			if(gameTankArr[a]!=undefined){							//	배열에 존재하는 img에 대해서만 (undefined가 아닌 경우만)
+				
+				var result = hitTest(this.img, gameTankArr[a].img);
+
+				if( result ){
+
+					//	총알 죽이고 총알의 setTimeout도 중지
+					this.map.removeChild(this.img);
+					clearTimeout(this.st);
+
+					//	적군 죽이고
+					this.map.removeChild(gameTankArr[a].img);			//	이미지를 먼저 없애고 delete를 맨마지막에 쓴다.
+					clearTimeout(gameTankArr[a].st);
+					delete gameTankArr[a];				//	배열에서 제거하고 이자리에는 Undefined 가 남음
+
+					turn=!turn;
+					count1=!count1;
+					count2=!count2;
+
 					break;
 					return;
 
@@ -140,6 +172,12 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 
 			clearTimeout(this.st);
 			this.map.removeChild(this.img);
+
+			turn=!turn;
+
+			count1=!count1;
+			count2=!count2;
+
 			return;
 
 		}

@@ -20,7 +20,7 @@
 var tankFn = function(map, x, y, wid, hei, velX, velY, gravity, distance, fireAngle, defense, hp){
 
 	this.img;
-	this.src="../images/tankRight.png";
+	this.src="../images/tank.png";
 	this.width=wid;
 	this.height=hei;
 	this.x=x;
@@ -155,12 +155,12 @@ var tankFn = function(map, x, y, wid, hei, velX, velY, gravity, distance, fireAn
 
 
 
-var tankMove = function( speed ){						//	탱크 이동
+var tankMove = function( tank, speed ){						//	탱크 이동
 
 	//console.log("스피드카운트"+speedCount);
 	this.speed=speed;
 		//움직임 효과
-	tankFn.velX=this.speed;
+	tank.velX=this.speed;
 		
 }
 

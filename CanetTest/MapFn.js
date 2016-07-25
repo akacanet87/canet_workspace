@@ -56,17 +56,6 @@ var mapFn = function(map, blockArr ,bgSrc, bgmSrc, blockImg){
 
 		}
 
-		this.map.addEventListener("mousemove", function(){
-
-			this.entX=event.clientX;
-			this.entY=event.clientY;
-
-			//console.log("x좌표 : "+this.entX+" , y좌표 : "+this.entY);
-
-		});
-
-		this.move();
-		
 	}
 
 	this.move=function(){

@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>winMain</title>
+
+
+<style>
+
+#mask{
+
+	overflow : hidden;
+	border : 1px solid red;
+
+
+}
+
+
+</style>
+
+<script src="./GameProcess.js"></script>
+<script src="./Windows.js"></script>
+<script src="./SelectBox.js"></script>
+<script src="./TankFn.js"></script>
+<script src="./BulletFn.js"></script>
+<script src="./GameFn.js"></script>
+<script src="./MapFn.js"></script>
+<script src="./Tanks.js"></script>
+<script src="./Maps.js"></script>
+<script src="./Items.js"></script>
+<script src="./SignIn.js"></script>
+
+<script>
+
+var wrapper;
+var map;
+
+var s_wid=1240;
+var s_hei=900;
+
+var blockArr = new Array();
+
+var overTheCloudMap= new overTheCloudMap();
+var onThePlanetMap= new onThePlanetMap();
+var theRuinedCityMap= new theRuinedCityMap();
+var theNightMap= new theNightMap();
+var theCastleMap= new theCastleMap();
+
+
+// tank들 선언
+var laserTank= new laserTank();
+var octopusTank= new octopusTank();
+var starTank= new starTank();
+var missileTank= new missileTank();
+var cannonTank= new cannonTank();
+
+
+//	item들 선언
+var itemFixHp;
+var itemDoubleShot;
+var itemSuperBullet;
+var itemMoveTank;
+
+
+
+// 각 거푸집 선언
+var tankFn;
+var mapFn;
+var itemFn;
+var tankMove;
+var bulletFn;
+
+
+var gameTankArr = new Array(2);
+var tank_Com;
+
+
+var mapLeft=0;
+var mapTop=0;
+var mapPosX=0;
+var mapPosY=0;
+
+
+var turn=true;
+
+
+var side=true;
+
+var birthX1=Math.random()*1000;
+var birthY1=10;
+var birthX2=Math.random()*1000;
+var birthY2=10;
+var tankWidth=70;
+var tankHeight=70;
+var velX=0;
+var velY=0;
+var gravity=0.1;
+var shotPw=0;
+
+var speed=0;
+
+var count1=false;
+var count2=false;
+
+var key;
+
+
+window.addEventListener("load", function(){
+
+	init();
+
+});
+
+
+function init(){
+
+	
+	wrapper = document.getElementById("wrapper");
+	mask = document.getElementById("mask");
+	map = document.getElementById("map");
+	
+	mask.style.width=1240+"px";
+	mask.style.height=900+"px";
+	mask.style.margin="auto";
+
+	map.style.width=3000+"px";
+	map.style.height=2000+"px";
+	map.style.position="relative";
+
+	moveMap();
+
+	gameMap = new mapFn( map, blockArr, overTheCloudMap.bgSrc, overTheCloudMap.bgmSrcS, overTheCloudMap.blockImg, overTheCloudMap.windImg );
+
+	gameMap.init();
+
+	gameTankArr[0] = new tankFn(map, birthX1, birthY1, tankWidth, tankHeight, velX, velY, gravity, laserTank.distance, laserTank.fireAngle, laserTank.defense, laserTank.hp);
+
+	gameTankArr[1] = new tankFn(map, birthX2, birthY2, tankWidth, tankHeight, velX, velY, gravity, octopusTank.distance, octopusTank.fireAngle, octopusTank.defense, octopusTank.hp);
+
+	gameTankArr[0].init();
+
+	gameTankArr[1].init();
+
+	count1=true;
+
+	
+
+}
+
+window.addEventListener("keydown", function(){
+
+	if(turn){
+		
+		key=event.keyCode;
+
+		if(count1){
+
+			switch(key){
+			
+			case 32:
+
+				tankMove(gameTankArr[0], 0);
+
+				bulletP1 = new bulletFn(map, gameTankArr[0].x, gameTankArr[0].y, gravity, 5, 5, side, laserTank.bulletImg1, gameTankArr[0].bulletImg2, gameTankArr[0].damage1, gameTankArr[0].damage2);
+
+				bulletP1.init();
+
+				count1=false;
+
+				break;//스페이스바
+			
+			case 37:
+
+				side=false;
+
+				tankMove( gameTankArr[0], -2);
+
+				gameTankArr[0].img.style.transform="rotateY(180deg)";
+				
+				break;
+			
+			case 39:
+
+				side=true;
+
+				tankMove(gameTankArr[0],2);
+
+				gameTankArr[0].img.style.transform="rotateY(0deg)";
+				
+				break;
+
+			}
+
+		}
+
+	}else if(!turn){
+		
+		key=event.keyCode;
+
+		if(count2){
+
+			switch(key){
+			
+			case 32:
+
+				tankMove( gameTankArr[1], 0 );
+
+				bulletP2 = new bulletFn(map, gameTankArr[1].x, gameTankArr[1].y, gravity, 5, 5, side, octopusTank.bulletImg1, gameTankArr[1].bulletImg2, gameTankArr[1].damage1, gameTankArr[1].damage2);
+
+				bulletP2.init();
+
+				count2=false;
+
+				break;//스페이스바
+			
+			case 37:
+
+				side=false;
+
+				tankMove( gameTankArr[1], -2 );
+
+				gameTankArr[1].img.style.transform="rotateY(180deg)";
+				
+				break;
+			
+			case 39:
+
+				side=true;
+
+				tankMove( gameTankArr[1], 2 );
+
+				gameTankArr[1].img.style.transform="rotateY(0deg)";
+				
+				break;
+
+			}
+
+		}
+
+	}
+
+
+
+});
+
+
+window.addEventListener("keyup", function(){
+
+	if(turn){
+
+		key=event.keyCode;
+
+		if(key==37 || key==39){
+		
+			gameTankArr[0].velX=0;
+		
+			speed=0;
+		
+		}
+
+	}else if(!turn){
+
+		key=event.keyCode;
+
+		if(key==37 || key==39){
+		
+			gameTankArr[1].velX=0;
+		
+			speed=0;
+		
+		}
+
+	}
+
+});
+
+
+function moveMap(){
+
+	window.addEventListener("mousemove", function(){
+
+		entX=event.clientX;
+		entY=event.clientY;
+
+		//console.log(entX+" , "+entY);
+
+		if( (entX > 1230) && mapPosX>-1760 ){
+
+			mapLeft-=1;
+			//mapTop-=2;
+
+			mapPosX=mapLeft;
+			mapPosY=mapTop;
+
+			map.style.backgroundPosition=mapPosX+"px "+mapPosY+"px";
+
+		}
+		
+		if( (entX < 10) && mapPosX<0 ){
+
+			mapLeft+=1;
+			//mapTop-=2;
+
+			mapPosX=mapLeft;
+			mapPosY=mapTop;
+
+			map.style.backgroundPosition=mapPosX+"px "+mapPosY+"px";
+
+		}
+		
+		if( (entY > 890) && mapPosY>-1100 ){
+
+			//mapLeft-=2;
+			mapTop-=1;
+
+			mapPosX=mapLeft;
+			mapPosY=mapTop;
+
+			map.style.backgroundPosition=mapPosX+"px "+mapPosY+"px";
+
+		}
+		
+		if( (entY < 10) && mapPosY<0 ){
+
+			//mapLeft-=2;
+			mapTop+=1;
+
+			mapPosX=mapLeft;
+			mapPosY=mapTop;
+
+			map.style.backgroundPosition=mapPosX+"px "+mapPosY+"px";
+
+		}
+
+	});
+
+	setTimeout("moveMap()", 100);
+
+
+}
+
+
+</script>
+
+</head>
+<body>
+
+<div id="wrapper">
+
+	<div id="mask">
+
+		<div id="map"></div>
+	
+	</div>
+
+</div>
+
+</body>
+</html>
+
+<!-- -->
