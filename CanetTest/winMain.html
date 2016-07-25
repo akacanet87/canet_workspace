@@ -80,6 +80,8 @@ var mapTop=0;
 var mapPosX=0;
 var mapPosY=0;
 
+var mapFlag;
+
 
 var turn=true;
 
@@ -103,6 +105,8 @@ var count1=false;
 var count2=false;
 
 var key;
+
+var dRate=0.5;
 
 
 window.addEventListener("load", function(){
@@ -129,7 +133,7 @@ function init(){
 
 	moveMap();
 
-	gameMap = new mapFn( map, blockArr, overTheCloudMap.bgSrc, overTheCloudMap.bgmSrcS, overTheCloudMap.blockImg, overTheCloudMap.windImg );
+	gameMap = new mapFn( map, blockArr, overTheCloudMap.bgSrc, overTheCloudMap.bgmSrcS, overTheCloudMap.blockImg, overTheCloudMap.windImg, overTheCloudMap.mapFlag );
 
 	gameMap.init();
 
@@ -286,11 +290,11 @@ function moveMap(){
 
 		if( (entX > 1230) && mapPosX>-1760 ){
 
-			mapLeft-=1;
-			//mapTop-=2;
+			mapLeft=-20;
+			mapTop=0;
 
-			mapPosX=mapLeft;
-			mapPosY=mapTop;
+			mapPosX+=mapLeft;
+			mapPosY+=mapTop;
 
 			map.style.backgroundPosition=mapPosX+"px "+mapPosY+"px";
 
@@ -298,23 +302,23 @@ function moveMap(){
 		
 		if( (entX < 10) && mapPosX<0 ){
 
-			mapLeft+=1;
-			//mapTop-=2;
+			mapLeft=20;
+			mapTop=0;
 
-			mapPosX=mapLeft;
-			mapPosY=mapTop;
+			mapPosX+=mapLeft;
+			mapPosY+=mapTop;
 
 			map.style.backgroundPosition=mapPosX+"px "+mapPosY+"px";
 
 		}
-		
+
 		if( (entY > 890) && mapPosY>-1100 ){
 
-			//mapLeft-=2;
-			mapTop-=1;
+			mapLeft=0;
+			mapTop=-10;
 
-			mapPosX=mapLeft;
-			mapPosY=mapTop;
+			mapPosX+=mapLeft;
+			mapPosY+=mapTop;
 
 			map.style.backgroundPosition=mapPosX+"px "+mapPosY+"px";
 
@@ -322,20 +326,36 @@ function moveMap(){
 		
 		if( (entY < 10) && mapPosY<0 ){
 
-			//mapLeft-=2;
-			mapTop+=1;
+			mapLeft=0;
+			mapTop=10;
 
-			mapPosX=mapLeft;
-			mapPosY=mapTop;
+			mapPosX+=mapLeft;
+			mapPosY+=mapTop;
+
+			map.style.backgroundPosition=mapPosX+"px "+mapPosY+"px";
+
+
+		}
+
+		if( ( (entX < 1230) && mapPosX<-1760) && ( (entX > 10) && mapPosX>0 ) &&  ( (entY < 890) && mapPosY<-1100 ) && ( (entY > 10) && mapPosY>0 ) ){
+
+			mapLeft=0;
+			mapTop=0;
+
+			mapPosX+=mapLeft;
+			mapPosY+=mapTop;
 
 			map.style.backgroundPosition=mapPosX+"px "+mapPosY+"px";
 
 		}
 
+		console.log(mapPosX);
+
+		
+
 	});
 
-	setTimeout("moveMap()", 100);
-
+	//setTimeout("moveMap()", 100);
 
 }
 

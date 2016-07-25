@@ -23,6 +23,7 @@ var theCastleMap = function(){
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
+	this.mapFlag=1;
 
 }
 
@@ -34,6 +35,7 @@ var overTheCloudMap = function(){
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
+	this.mapFlag=2;
 
 }
 
@@ -45,6 +47,7 @@ var theRuinedCityMap = function(){
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
+	this.mapFlag=3;
 
 }
 
@@ -56,6 +59,7 @@ var onThePlanetMap = function(){
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
+	this.mapFlag=4;
 
 }
 
@@ -67,6 +71,7 @@ var theNightMap = function(){
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
+	this.mapFlag=5;
 
 }
 

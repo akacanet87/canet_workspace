@@ -20,6 +20,8 @@ var moveGauge = function(){						//	이동 가능 거리 게이지
 
 var bulletDegGauge = function(){						//	총알 발사 각도 창
 
+	//Math.PI;
+
 }
 
 
