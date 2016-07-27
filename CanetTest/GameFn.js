@@ -94,3 +94,23 @@ var audioCtrl = function( src ){
 	}
 
 }
+
+
+var fireAngle = function( cal ){
+
+	this.x=0;
+	this.rad=1.8;
+	this.y=0;
+	this.angle;
+	this.cal=cal;
+
+	this.init = function(){
+
+		this.y+=this.cal;
+		this.x=parseFloat(Math.sqrt(this.rad-this.y*this.y));
+
+		console.log( this.x+" , "+this.y );
+
+	}
+
+}

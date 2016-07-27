@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+<script>
+
+var fireAngle = function(angle){
+
+	this.x=1;
+	this.y=0;
+	this.angle=angle;
+
+	this.rad=this.angle*Math.PI/180;
+
+	this.tan=Math.tan(this.rad);
+
+	this.y=this.x*this.tan;
+
+	console.log(this.y);
+
+}
+
+</script>
+
+
+</head>
+<body>
+
+</body>
+</html>
+
+<!-- -->

@@ -38,6 +38,8 @@ var tankFn = function(map, x, y, wid, hei, velX, velY, gravity, distance, fireAn
 	this.fireImg;
 	this.hitImg;
 
+	this.tankFlag=true;
+
 	this.st;
 
 	this.init = function(){
@@ -79,26 +81,29 @@ var tankFn = function(map, x, y, wid, hei, velX, velY, gravity, distance, fireAn
 
 		for(var i=0;i<blockArr.length;i++){					//	히트테스트
 
-			if(blockArr[i]!=undefined){
+			for(var j=0;j<blockArr[i].length;j++){
 
-				var result=hitTest(this.img, blockArr[i].img );
+				if(blockArr[i][j]!=undefined){
 
-				if(result){
+					var result=hitTest(this.img, blockArr[i][j].img );
 
-					//console.log("나 밟았어");
+					if(result){
 
-					this.velY=0; //밟으면 떨어지지 않게 velY값을 0으로 준다!!
+						//console.log("나 밟았어");
 
-					this.falling=false;
+						this.velY=0; //밟으면 떨어지지 않게 velY값을 0으로 준다!!
 
-					break;
+						this.falling=false;
+
+						break;
+
+					}
 
 				}
 
 			}
 
 		}
-
 
 		this.st=setTimeout(function(){
 
@@ -106,36 +111,6 @@ var tankFn = function(map, x, y, wid, hei, velX, velY, gravity, distance, fireAn
 		
 		}, 10);
 
-/*
-				
-				//	총알과 부딪히면
-		for( var a=0 ; a<blockArr.length ; a++ ){
-
-			if(blockArr[a]!=undefined){							//	배열에 존재하는 img에 대해서만 (undefined가 아닌 경우만)
-				
-				var result = hitTest(this.img, blockArr[a].img);
-
-				if( result ){
-
-					//	총알 죽이고 총알의 setTimeout도 중지
-					this.map.removeChild(this.img);
-					clearTimeout(this.st);
-
-					//	적군 죽이고
-					this.map.removeChild(blockArr[a].img);			//	이미지를 먼저 없애고 delete를 맨마지막에 쓴다.
-					clearTimeout(blockArr[a].st);
-					delete blockArr[a];				//	배열에서 제거하고 이자리에는 Undefined 가 남음
-
-					break;
-					return;
-
-				}
-
-			}
-
-		}
-
-*/
 
 			
 		// 부딪히지 않고 화면 밖으로 나가면
@@ -148,6 +123,12 @@ var tankFn = function(map, x, y, wid, hei, velX, velY, gravity, distance, fireAn
 			return;
 
 		}
+
+	}
+
+	this.setTurn = function(){
+
+		
 
 	}
 

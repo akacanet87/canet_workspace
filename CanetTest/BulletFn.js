@@ -48,8 +48,8 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 
 		if(this.side){
 			
-			this.x=this.x+20;
-			this.y=this.y+10;
+			this.x=this.x+tankWidth+1;
+			this.y=this.y-1;
 			this.shotPwX=this.shotPwX;
 			this.shotPwY=-this.shotPwY;
 			this.img.style.transform="rotateY(0deg)";
@@ -58,8 +58,8 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 
 		}else{
 
-			this.x=this.x;
-			this.y=this.y+10;
+			this.x=this.x-parseInt(this.img.style.width)-1;
+			this.y=this.y-1;
 			this.shotPwX=-this.shotPwX;
 			this.shotPwY=-this.shotPwY;
 			this.img.style.transform="rotateY(180deg)";
@@ -100,7 +100,7 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 			
 		}, 10);		// setTimeout이 clearTimeout보다 먼저 호출되어야 한다.
 		
-
+/*
 
 		//	블록과 부딪히면
 		for( var a=0 ; a<blockArr.length ; a++ ){
@@ -121,11 +121,42 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 					delete blockArr[a];				//	배열에서 제거하고 이자리에는 Undefined 가 남음
 
 					turn=!turn;
-					count1=!count1;
-					count2=!count2;
 
 					break;
 					return;
+
+				}
+
+			}
+
+		}
+
+*/
+
+		for(var i=0;i<blockArr.length;i++){					//	히트테스트
+
+			for(var j=0;j<blockArr[i].length;j++){
+
+				if(blockArr[i][j]!=undefined){
+
+					var result=hitTest(this.img, blockArr[i][j].img );
+
+					if(result){
+
+						this.map.removeChild(this.img);
+						clearTimeout(this.st);
+
+						//	적군 죽이고
+						this.map.removeChild(blockArr[i][j].img);			//	이미지를 먼저 없애고 delete를 맨마지막에 쓴다.
+						clearTimeout(blockArr[i][j].st);
+						delete blockArr[i][j];				//	배열에서 제거하고 이자리에는 Undefined 가 남음
+
+						turn=!turn;
+
+						break;
+						return;
+
+					}
 
 				}
 
@@ -152,8 +183,6 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 					delete gameTankArr[a];				//	배열에서 제거하고 이자리에는 Undefined 가 남음
 
 					turn=!turn;
-					count1=!count1;
-					count2=!count2;
 
 					break;
 					return;
@@ -174,9 +203,6 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 			this.map.removeChild(this.img);
 
 			turn=!turn;
-
-			count1=!count1;
-			count2=!count2;
 
 			return;
 

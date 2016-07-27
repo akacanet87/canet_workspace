@@ -38,7 +38,13 @@ var map;
 var s_wid=1240;
 var s_hei=900;
 
-var blockArr = new Array();
+var blockArr1 = new Array();
+var blockArr2 = new Array();
+var blockArr3 = new Array();
+var blockArr4 = new Array();
+var blockArr5 = new Array();
+
+var blockArr = new Array( blockArr1, blockArr2, blockArr3, blockArr4, blockArr5 );
 
 var overTheCloudMap= new overTheCloudMap();
 var onThePlanetMap= new onThePlanetMap();
@@ -82,15 +88,19 @@ var mapPosY=0;
 
 var mapFlag;
 
+var moveMap;
+
+var fireAngle;
+
 
 var turn=true;
 
 
 var side=true;
 
-var birthX1=Math.random()*1000;
+var birthX1=Math.random()*3000;
 var birthY1=10;
-var birthX2=Math.random()*1000;
+var birthX2=Math.random()*3000;
 var birthY2=10;
 var tankWidth=70;
 var tankHeight=70;
@@ -131,11 +141,15 @@ function init(){
 	map.style.height=2000+"px";
 	map.style.position="relative";
 
-	moveMap();
+	//moveMap();
 
-	gameMap = new mapFn( map, blockArr, overTheCloudMap.bgSrc, overTheCloudMap.bgmSrcS, overTheCloudMap.blockImg, overTheCloudMap.windImg, overTheCloudMap.mapFlag );
+	
+
+	gameMap = new mapFn( map, blockArr, overTheCloudMap.bgSrc, overTheCloudMap.bgmSrcS, overTheCloudMap.blockImg, overTheCloudMap.windImg,   overTheCloudMap.blockSize, overTheCloudMap.blockAreaX, overTheCloudMap.blockAreaY, overTheCloudMap.blockLen );
 
 	gameMap.init();
+
+	fireAngle(0.2);
 
 	gameTankArr[0] = new tankFn(map, birthX1, birthY1, tankWidth, tankHeight, velX, velY, gravity, laserTank.distance, laserTank.fireAngle, laserTank.defense, laserTank.hp);
 
@@ -170,6 +184,7 @@ window.addEventListener("keydown", function(){
 				bulletP1.init();
 
 				count1=false;
+				count2=true;
 
 				break;//스페이스바
 			
@@ -190,6 +205,17 @@ window.addEventListener("keydown", function(){
 				tankMove(gameTankArr[0],2);
 
 				gameTankArr[0].img.style.transform="rotateY(0deg)";
+				
+				break;
+
+
+			case 38:
+
+
+				break;
+			
+			case 40:
+
 				
 				break;
 
@@ -214,6 +240,7 @@ window.addEventListener("keydown", function(){
 				bulletP2.init();
 
 				count2=false;
+				count1=true;
 
 				break;//스페이스바
 			
@@ -234,6 +261,15 @@ window.addEventListener("keydown", function(){
 				tankMove( gameTankArr[1], 2 );
 
 				gameTankArr[1].img.style.transform="rotateY(0deg)";
+				
+				break;
+
+			case 38:
+
+				break;
+			
+			case 40:
+
 				
 				break;
 
@@ -279,7 +315,14 @@ window.addEventListener("keyup", function(){
 });
 
 
-function moveMap(){
+
+
+/*
+
+var moveMap = function(){
+
+	var PosX;
+	var PosY;
 
 	window.addEventListener("mousemove", function(){
 
@@ -349,7 +392,11 @@ function moveMap(){
 
 		}
 
+		PosX=mapPosX;
+		PosY=mapPosY;
+
 		console.log(mapPosX);
+		console.log(PosX);
 
 		
 
@@ -358,6 +405,8 @@ function moveMap(){
 	//setTimeout("moveMap()", 100);
 
 }
+
+*/
 
 
 </script>

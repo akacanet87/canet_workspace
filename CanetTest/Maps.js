@@ -23,6 +23,10 @@ var theCastleMap = function(){
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
+	this.blockSize=25;
+	this.blockAreaX=[0, 200, 800, 1200, 1700];
+	this.blockAreaY=[1500, 1800, 1200, 900, 1500];
+	this.blockLen=[70, 100, 90, 80, 120];
 	this.mapFlag=1;
 
 }
@@ -35,6 +39,10 @@ var overTheCloudMap = function(){
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
+	this.blockSize=25;
+	this.blockAreaX=[0, 200, 800, 1200, 1700];
+	this.blockAreaY=[1500, 1800, 1200, 900, 1500];
+	this.blockLen=[70, 100, 90, 80, 120];
 	this.mapFlag=2;
 
 }
@@ -47,6 +55,10 @@ var theRuinedCityMap = function(){
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
+	this.blockSize=25;
+	this.blockAreaX=[0, 200, 800, 1200, 1700];
+	this.blockAreaY=[1500, 1800, 1200, 900, 1500];
+	this.blockLen=[70, 100, 90, 80, 120];
 	this.mapFlag=3;
 
 }
@@ -59,6 +71,10 @@ var onThePlanetMap = function(){
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
+	this.blockSize=25;
+	this.blockAreaX=[0, 200, 800, 1200, 1700];
+	this.blockAreaY=[1500, 1800, 1200, 900, 1500];
+	this.blockLen=[70, 100, 90, 80, 120];
 	this.mapFlag=4;
 
 }
@@ -71,6 +87,10 @@ var theNightMap = function(){
 	this.bgSrc="../images/space1.jpg";
 	this.blockImg="../images/block.png";
 	this.windImg="../images/enemyship.png";
+	this.blockSize=25;
+	this.blockAreaX=[0, 200, 800, 1200, 1700];
+	this.blockAreaY=[1500, 1800, 1200, 900, 1500];
+	this.blockLen=[70, 100, 90, 80, 120];
 	this.mapFlag=5;
 
 }

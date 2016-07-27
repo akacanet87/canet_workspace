@@ -960,6 +960,11 @@ var winItemShop = function( mask, gameWin, stageW, stageH ){
 	this.stage;
 	this.width=stageW;
 	this.height=stageH;
+	this.itemArr1 = new Array();
+	this.itemArr2 = new Array();
+	this.itemArr3 = new Array();
+	this.itemArr4 = new Array();
+	this.itemDisArr = [ this.itemArr1, this.itemArr2, this.itemArr3, this.itemArr4];
 
 	this.itemSize=100;
 	
@@ -975,69 +980,66 @@ var winItemShop = function( mask, gameWin, stageW, stageH ){
 		this.itemListDiv = document.createElement("div");
 		this.itemInfoDiv = document.createElement("div");
 		this.itemInfo = document.createElement("textarea");
-		this.itemLine = document.createElement("div");
-		this.itemImg = document.createElement("img");
 
 		this.btOk = document.createElement("input");
 		this.btBack = document.createElement("input");
 
 		this.stage.style.width=this.width+"px";
 		this.stage.style.height=this.height+"px";
-		this.stage.style.margin=0+"px";
 		this.stage.style.position="absolute";
 		this.stage.style.textAlign="center";
 		this.stage.style.backgroundImage="url('../images/f1.png')";
 
 		this.itemDiv.style.width=this.width*7/8+"px";
-		this.itemDiv.style.height=this.height*2/3+"px";
+		this.itemDiv.style.height=this.height*3/4+"px";
 		this.itemDiv.style.margin="auto";
-		//this.itemDiv.style.position="absolute";
-		//this.itemDiv.style.left=this.width/10+"px";
-		this.itemDiv.style.top=this.height/10+"px";
-		this.itemDiv.style.backgroundImage="url('../images/f3.jpg')";
+		this.itemDiv.style.marginTop=80+"px";
 
 		this.itemListDiv.style.width=this.width*5/8+"px";
-		this.itemListDiv.style.height=this.height*1/3+"px";
-		this.itemListDiv.style.margin="auto";
-		this.itemListDiv.style.position="absolute";
-		this.itemListDiv.style.left=this.width/10+"px";
-		this.itemListDiv.style.top=this.height/10+"px";
-		this.itemListDiv.style.backgroundImage="url('../images/f2.jpg')";
+		this.itemListDiv.style.height=this.height*2/3+"px";
+		this.itemListDiv.style.marginTop=30+"px";
+		this.itemListDiv.style.float="left";
 
 		this.itemInfoDiv.style.width=this.width*2/8+"px";
 		this.itemInfoDiv.style.height=this.height*2/3+"px";
 		this.itemInfoDiv.style.margin="auto";
-		this.itemInfoDiv.style.position="absolute";
-		this.itemInfoDiv.style.left=this.width/10+"px";
-		this.itemInfoDiv.style.top=this.height/10+"px";
-		this.itemInfoDiv.style.backgroundImage="url('../images/f4.jpg')";
+		this.itemInfoDiv.style.marginTop=30+"px";
+		this.itemInfoDiv.style.float="left";
+
+		for( var a=0 ; a<4 ; a++ ){
+
+			for( var b=0 ; b<5 ; b++ ){
+
+				this.itemImg = document.createElement("img");
+
+				this.itemImg.style.width=100+"px";
+				this.itemImg.style.height=100+"px";
+				this.itemImg.style.position="absolute";
+				this.itemImg.style.left=180+(120*b)+"px";
+				this.itemImg.style.top=180+(130*a)+"px";
+				this.itemImg.src="../images/block.png";
+
+				this.itemListDiv.appendChild(this.itemImg);
+
+			}
+
+		}
+
 
 		this.itemInfo.style.width=this.width/5+"px";
-		this.itemInfo.style.height=this.height/4+"px";
-		this.itemInfo.style.margin="auto";
+		this.itemInfo.style.height=this.height/2+"px";
+		//this.itemInfo.style.margin="auto";
 		this.itemInfo.style.position="absolute";
-		this.itemInfo.style.left=this.width/10+"px";
-		this.itemInfo.style.top=this.height/10+"px";
+		this.itemInfo.style.left=880+"px";
+		this.itemInfo.style.top=200+"px";
 		this.itemInfo.style.backgroundImage="url('../images/f3.jpg')";
 		this.itemInfo.style.fontSize="30pt";
 		this.itemInfo.style.fontWeight="bold";
 		this.itemInfo.style.color="silver";
 		this.itemInfo.value="안녕";
 
-		for( var a=0 ; a<3 ; a++ ){
-
-			this.itemLine.style.width=100+"px";
-			this.itemLine.style.height=this.height*2/5+"px";
-			this.itemLine.style.margin="auto";
-			this.itemLine.style.position="absolute";
-			this.itemLine.style.left=this.width/10+(100*a)+"px";
-			this.itemLine.style.top=this.height/9+"px";
-			this.itemLine.style.backgroundImage="url('../images/f4.jpg')";
-
-			this.itemListDiv.appendChild(this.itemLine);
-
-		}
-
+/*		
+*/
 		this.btOk.type="button";
 		this.btOk.style.width=150+"px";
 		this.btOk.style.height=70+"px";
@@ -1058,7 +1060,6 @@ var winItemShop = function( mask, gameWin, stageW, stageH ){
 		this.btBack.value="Back";
 		this.btBack.style.fontSize="36pt";
 
-		this.itemListDiv.appendChild(this.itemLine);
 		this.itemInfoDiv.appendChild(this.itemInfo);
 
 		this.itemDiv.appendChild(this.itemListDiv);
