@@ -44,7 +44,7 @@ var winStart = function ( mask, gameWin, stageW, stageH  ){			// stage로부터 
 		this.stage.style.margin=0+"px";
 		this.stage.style.position="absolute";
 
-		this.stage.style.backgroundImage="url('../images/space1.jpg')";							//	배경이미지 소스
+		this.stage.style.backgroundImage="url('../images/bg/metal4.png')";							//	배경이미지 소스
 
 		this.gameWin.appendChild(this.stage);
 
@@ -101,7 +101,7 @@ var winLogIn = function( mask, gameWin, stageW, stageH ){
 		this.stage.style.height=this.height+"px";
 		this.stage.style.margin=0+"px";
 		this.stage.style.position="absolute";
-		this.stage.style.backgroundImage="url('../images/f1.png')";
+		this.stage.style.backgroundImage="url('../images/bg/metal4.png')";	
 
 		this.logInForm.style.width=this.width/2+"px";
 		this.logInForm.style.height=this.height/2+"px";
@@ -109,7 +109,7 @@ var winLogIn = function( mask, gameWin, stageW, stageH ){
 		this.logInForm.style.position="absolute";
 		this.logInForm.style.left=this.width/4+"px";
 		this.logInForm.style.top=this.height/4+"px";
-		this.logInForm.style.backgroundImage="url('../images/f3.jpg')";
+		this.logInForm.style.backgroundImage="url('../images/bg/metal.png')";
 		this.logInForm.style.textAlign="center";
 
 		this.signInForm.style.width=this.width/2+"px";
@@ -118,7 +118,7 @@ var winLogIn = function( mask, gameWin, stageW, stageH ){
 		this.signInForm.style.position="absolute";
 		this.signInForm.style.left=this.width/4+"px";
 		this.signInForm.style.top=this.height/4+"px";
-		this.signInForm.style.backgroundImage="url('../images/f2.jpg')";
+		this.signInForm.style.backgroundImage="url('../images/bg/metal.png')";
 		this.signInForm.style.textAlign="center";
 
 		this.idBox.type="text";

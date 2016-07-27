@@ -17,10 +17,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-var tankFn = function(map, x, y, wid, hei, velX, velY, gravity, distance, fireAngle, defense, hp){
+var tankFn = function(map, x, y, wid, hei, velX, velY, gravity, distance, fireAngle, defense, hp, tankImg, bulletImg, bulletWid, bulletHei){
 
 	this.img;
-	this.src="../images/tank.png";
+	this.tankImg=tankImg;
+	this.bulletImg=bulletImg;
+	this.bulletWid=bulletWid;
+	this.bulletHei=bulletHei;
 	this.width=wid;
 	this.height=hei;
 	this.x=x;
@@ -46,7 +49,7 @@ var tankFn = function(map, x, y, wid, hei, velX, velY, gravity, distance, fireAn
 
 		this.img = document.createElement("img");
 
-		this.img.src=this.src;
+		this.img.src=this.tankImg;
 		this.img.style.width=this.width+"px";
 		this.img.style.height=this.height+"px";
 		this.img.style.position="absolute";
@@ -123,12 +126,6 @@ var tankFn = function(map, x, y, wid, hei, velX, velY, gravity, distance, fireAn
 			return;
 
 		}
-
-	}
-
-	this.setTurn = function(){
-
-		
 
 	}
 

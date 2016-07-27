@@ -18,31 +18,30 @@
 
 
 
-var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1, bulletImg2, damage1, damage2){
+var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg, damage, bulletWid, bulletHei ){
 	
 	this.img;
-	this.bulletImg1=bulletImg1;
-	this.bulletImg2=bulletImg2;
-	this.damage1=damage1;
-	this.damage2=damage2;
+	this.bulletImg=bulletImg;
+	this.damage=damage;
 	this.map=map;
 	this.x=tankX;
 	this.y=tankY;
+	this.bulletWid=bulletWid;
+	this.bulletHei=bulletHei;
 	this.gravity=gravity;
-	this.shotPwX=pwX;
-	this.shotPwY=pwY;
+	this.angleX=pwX;
+	this.angleY=pwY;
 	this.side=side;
 	this.st;
-
-	this.bulletLife=2;
+	this.firePw=bulletPower.firePower/5;
 
 	this.init = function(){
 
 		this.img = document.createElement("img");
-		this.img.src=this.bulletImg1;
+		this.img.src=this.bulletImg;
 		this.img.style.position="absolute";
-		this.img.style.width=50+"px";
-		this.img.style.height=25+"px";
+		this.img.style.width=this.bulletWid+"px";
+		this.img.style.height=this.bulletHei+"px";
 		this.img.style.left=this.x+"px";
 		this.img.style.top=this.y+"px";
 
@@ -50,8 +49,8 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 			
 			this.x=this.x+tankWidth+1;
 			this.y=this.y-1;
-			this.shotPwX=this.shotPwX;
-			this.shotPwY=-this.shotPwY;
+			this.angleX=this.angleX;
+			this.angleY=-this.angleY;
 			this.img.style.transform="rotateY(0deg)";
 			this.img.style.left=this.x+"px";
 			this.img.style.top=this.y+"px";
@@ -60,8 +59,8 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 
 			this.x=this.x-parseInt(this.img.style.width)-1;
 			this.y=this.y-1;
-			this.shotPwX=-this.shotPwX;
-			this.shotPwY=-this.shotPwY;
+			this.angleX=-this.angleX;
+			this.angleY=-this.angleY;
 			this.img.style.transform="rotateY(180deg)";
 			this.img.style.left=this.x+"px";
 			this.img.style.top=this.y+"px";
@@ -69,6 +68,9 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 		}
 
 		this.map.appendChild(this.img);
+
+		this.angleX=this.angleX*this.firePw;
+		this.angleY=this.angleY*this.firePw;
 
 		this.move();
 
@@ -79,14 +81,15 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg1,
 		var me = this;
 
 		//console.log("여긴가?");
+		//console.log(bulletPower.firePower);
+		
 
+		this.x+=this.angleX;
+		this.y+=this.angleY;
 
-		this.shotPwY+=this.gravity;
+		this.angleY+=this.gravity;
 
-		//console.log(this.shotPwY);
-
-		this.x+=this.shotPwX;
-		this.y+=this.shotPwY;
+		console.log(this.x+" , "+this.y);
 
 		this.img.style.left=this.x+"px";
 		this.img.style.top=this.y+"px";

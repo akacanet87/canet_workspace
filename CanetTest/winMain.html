@@ -29,6 +29,7 @@
 <script src="./Maps.js"></script>
 <script src="./Items.js"></script>
 <script src="./SignIn.js"></script>
+<script src="./Gauge.js"></script>
 
 <script>
 
@@ -47,26 +48,31 @@ var blockArr5 = new Array();
 var blockArr = new Array( blockArr1, blockArr2, blockArr3, blockArr4, blockArr5 );
 
 var overTheCloudMap= new overTheCloudMap();
-var onThePlanetMap= new onThePlanetMap();
-var theRuinedCityMap= new theRuinedCityMap();
-var theNightMap= new theNightMap();
 var theCastleMap= new theCastleMap();
+var theRuinedCityMap= new theRuinedCityMap();
+var theForestMap= new theForestMap();
+var theNightMap= new theNightMap();
+var theDesertMap= new theDesertMap();
+
+var mapArr= new Array( overTheCouldMap, theCastleMap, theRuinedCityMap, theForestMap, theNightMap, theDesertMap );
 
 
 // tank들 선언
-var laserTank= new laserTank();
-var octopusTank= new octopusTank();
-var starTank= new starTank();
-var missileTank= new missileTank();
 var cannonTank= new cannonTank();
+var dukeTank= new dukeTank();
+var octopusTank= new octopusTank();
+var missileTank= new missileTank();
+var starTank= new starTank();
 
+var tankArr = new Array( cannonTank, dukeTank, octopusTank, missileTank, starTank );
 
 //	item들 선언
-var itemFixHp;
-var itemDoubleShot;
-var itemSuperBullet;
-var itemMoveTank;
+var itemFixHp = new itemFixHp;
+var itemDoubleShot = new itemDoubleShot;
+var itemSuperBullet = new itemSuperBullet;
+var itemMoveTank = new itemMoveTank;
 
+var itemArr = new Array( itemFixHp, itemDoubleShot, itemSuperBullet, itemMoveTank );
 
 
 // 각 거푸집 선언
@@ -76,9 +82,15 @@ var itemFn;
 var tankMove;
 var bulletFn;
 
-
+var getTankArr = new Array(2);
 var gameTankArr = new Array(2);
+var getMap;
+var getItemArr = new Array(4);
+
 var tank_Com;
+
+var bulletP1;
+var bulletP2;
 
 
 var mapLeft=0;
@@ -91,6 +103,7 @@ var mapFlag;
 var moveMap;
 
 var fireAngle;
+var bulletPower= new bulletPower();
 
 
 var turn=true;
@@ -111,8 +124,17 @@ var shotPw=0;
 
 var speed=0;
 
+
+
+var spaceFlag=1;
+
+var cal=0;
+var angleX=0;
+var angleY=0;
+
 var count1=false;
 var count2=false;
+var spaceFlag;
 
 var key;
 
@@ -143,23 +165,37 @@ function init(){
 
 	//moveMap();
 
-	
+	getMap = overTheCloudMap;
 
-	gameMap = new mapFn( map, blockArr, overTheCloudMap.bgSrc, overTheCloudMap.bgmSrcS, overTheCloudMap.blockImg, overTheCloudMap.windImg,   overTheCloudMap.blockSize, overTheCloudMap.blockAreaX, overTheCloudMap.blockAreaY, overTheCloudMap.blockLen );
+	gameMap = new mapFn( map, blockArr, getMap.bgSrc, getMap.bgmSrc, getMap.blockImg, getMap.windImg, getMap.blockSize, getMap.blockAreaX, getMap.blockAreaY, getMap.blockLen );
 
 	gameMap.init();
 
-	fireAngle(0.2);
+	//for ( var a=0 ; a<gameTankArr.length ; a++ ){
 
-	gameTankArr[0] = new tankFn(map, birthX1, birthY1, tankWidth, tankHeight, velX, velY, gravity, laserTank.distance, laserTank.fireAngle, laserTank.defense, laserTank.hp);
+		//gameTankArr[a]=;
 
-	gameTankArr[1] = new tankFn(map, birthX2, birthY2, tankWidth, tankHeight, velX, velY, gravity, octopusTank.distance, octopusTank.fireAngle, octopusTank.defense, octopusTank.hp);
+	//}
+
+
+	getTankArr[0]= cannonTank;
+	getTankArr[1]= octopusTank;
+
+	gameTankArr[0] = new tankFn(map, birthX1, birthY1, tankWidth, tankHeight, velX, velY, gravity, getTankArr[0].distance, getTankArr[0].fireAngle, getTankArr[0].defense, getTankArr[0].hp, getTankArr[0].tankImg, getTankArr[0].bulletImg, getTankArr[0].bulletWid, getTankArr[0].bulletHei);
+
+	gameTankArr[1] = new tankFn(map, birthX2, birthY2, tankWidth, tankHeight, velX, velY, gravity, getTankArr[1].distance, getTankArr[1].fireAngle, getTankArr[1].defense, getTankArr[1].hp, getTankArr[1].tankImg, getTankArr[1].bulletImg, getTankArr[1].bulletWid, getTankArr[1].bulletHei);
 
 	gameTankArr[0].init();
 
 	gameTankArr[1].init();
 
+	
+
+	
+	//fireAngle(bulletP1, 0.02);
+
 	count1=true;
+	spaceFlag=true;
 
 	
 
@@ -171,6 +207,10 @@ window.addEventListener("keydown", function(){
 		
 		key=event.keyCode;
 
+		bulletP1 = new bulletFn(map, gameTankArr[0].x, gameTankArr[0].y, gravity, angleX, angleY, side, gameTankArr[0].bulletImg, gameTankArr[0].damage, gameTankArr[0].bulletWid, gameTankArr[0].bulletHei);
+
+		bulletPower.init();
+
 		if(count1){
 
 			switch(key){
@@ -179,12 +219,32 @@ window.addEventListener("keydown", function(){
 
 				tankMove(gameTankArr[0], 0);
 
-				bulletP1 = new bulletFn(map, gameTankArr[0].x, gameTankArr[0].y, gravity, 5, 5, side, laserTank.bulletImg1, gameTankArr[0].bulletImg2, gameTankArr[0].damage1, gameTankArr[0].damage2);
+				if( spaceFlag ){
 
-				bulletP1.init();
+					bulletPower.begin();
 
-				count1=false;
-				count2=true;
+					spaceFlag=!spaceFlag;
+
+				}else if( !spaceFlag ){
+
+					bulletPower.fire();
+
+					console.log(bulletPower.firePower);
+
+					bulletP1.init();
+
+					count1=false;
+					count2=true;
+
+					console.log(bulletPower.firePower);
+
+					bulletPower.end();
+
+					console.log(bulletPower.firePower);
+
+					spaceFlag=!spaceFlag;
+
+				}
 
 				break;//스페이스바
 			
@@ -207,16 +267,21 @@ window.addEventListener("keydown", function(){
 				gameTankArr[0].img.style.transform="rotateY(0deg)";
 				
 				break;
-
-
+				
 			case 38:
 
+				fireAngle( bulletP1, 0.02 );
+
+				console.log(bulletP1.angleX+" , "+bulletP1.angleY);
 
 				break;
 			
 			case 40:
 
-				
+				fireAngle( bulletP1, -0.02 );
+
+				console.log(bulletP1.angleX+" , "+bulletP1.angleY);
+
 				break;
 
 			}
@@ -227,20 +292,44 @@ window.addEventListener("keydown", function(){
 		
 		key=event.keyCode;
 
+		bulletP2 = new bulletFn(map, gameTankArr[1].x, gameTankArr[1].y, gravity, angleX, angleY, side, gameTankArr[1].bulletImg, gameTankArr[1].damage, gameTankArr[1].bulletWid, gameTankArr[1].bulletHei);
+
+		bulletPower.init();
+
 		if(count2){
 
 			switch(key){
 			
 			case 32:
 
-				tankMove( gameTankArr[1], 0 );
+				tankMove(gameTankArr[1], 0);
 
-				bulletP2 = new bulletFn(map, gameTankArr[1].x, gameTankArr[1].y, gravity, 5, 5, side, octopusTank.bulletImg1, gameTankArr[1].bulletImg2, gameTankArr[1].damage1, gameTankArr[1].damage2);
+				if( spaceFlag ){
 
-				bulletP2.init();
+					bulletPower.begin();
 
-				count2=false;
-				count1=true;
+					spaceFlag=!spaceFlag;
+
+				}else if( !spaceFlag ){
+
+					bulletPower.fire();
+
+					console.log(bulletPower.firePower);
+
+					bulletP2.init();
+
+					count1=true;
+					count2=false;
+
+					console.log(bulletPower.firePower);
+
+					bulletPower.end();
+
+					console.log(bulletPower.firePower);
+
+					spaceFlag=!spaceFlag;
+
+				}
 
 				break;//스페이스바
 			
@@ -248,7 +337,7 @@ window.addEventListener("keydown", function(){
 
 				side=false;
 
-				tankMove( gameTankArr[1], -2 );
+				tankMove( gameTankArr[1], -2);
 
 				gameTankArr[1].img.style.transform="rotateY(180deg)";
 				
@@ -258,19 +347,26 @@ window.addEventListener("keydown", function(){
 
 				side=true;
 
-				tankMove( gameTankArr[1], 2 );
+				tankMove(gameTankArr[1],2);
 
 				gameTankArr[1].img.style.transform="rotateY(0deg)";
 				
 				break;
-
+				
 			case 38:
+
+				fireAngle( bulletP2, 0.02 );
+
+				console.log(bulletP2.angleX+" , "+bulletP2.angleY);
 
 				break;
 			
 			case 40:
 
-				
+				fireAngle( bulletP2, -0.02 );
+
+				console.log(bulletP2.angleX+" , "+bulletP2.angleY);
+
 				break;
 
 			}

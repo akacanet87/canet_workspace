@@ -19,20 +19,38 @@
 
 
 
-var laserTank = function(){
+var cannonTank = function(){
 
 	this.img;
-	this.tankImg="../images/tank.png";
-	this.damage1=180;
-	this.damage2=450;
+	this.tankImg="../images/tank/cannontank.png";
+	this.damage=180;
 	this.distance=200;
 	this.fireAngle=40;
 	this.defense=20;
 	this.fireImg;
 	this.hitImg;
-	this.hp=1200;
-	this.bulletImg1="../images/bullet.png";
-	this.bulletImg2="../images/bullet.png";
+	this.hp=1400;
+	this.bulletImg="../images/bullet/cannon.png";
+	this.bulletWid=30;
+	this.bulletHei=30;
+
+}
+
+
+var dukeTank = function(){
+
+	this.img;
+	this.tankImg="../images/tank/duketank.png";
+	this.damage=180;
+	this.distance=250;
+	this.fireAngle=50;
+	this.defense=15;
+	this.fireImg;
+	this.hitImg;
+	this.hp=1300;
+	this.bulletImg="../images/bullet/duke.png";
+	this.bulletWid=40;
+	this.bulletHei=15;
 
 }
 
@@ -40,17 +58,34 @@ var laserTank = function(){
 var octopusTank = function(){
 
 	this.img;
-	this.src="../images/tank.png";
-	this.damage1=180;
-	this.damage2=250;
-	this.distance=250;
-	this.fireAngle=50;
+	this.tankImg="../images/tank/octopustank.png";
+	this.damage=210;
+	this.distance=180;
+	this.fireAngle=70;
+	this.defense=25;
+	this.fireImg;
+	this.hitImg;
+	this.hp=1100;
+	this.bulletImg="../images/bullet/octopus.png";
+	this.bulletWid=30;
+	this.bulletHei=30;
+
+}
+
+var missileTank = function(){
+
+	this.img;
+	this.tankImg="../images/tank/missiletank.png";
+	this.damage=190;
+	this.distance=190;
+	this.fireAngle=40;
 	this.defense=15;
 	this.fireImg;
 	this.hitImg;
-	this.hp=1300;
-	this.bulletImg1="../images/bullet.png";
-	this.bulletImg2="../images/bullet.png";
+	this.hp=1400;
+	this.bulletImg="../images/bullet/missile.png";
+ 	this.bulletWid=30;
+	this.bulletHei=30;
 
 }
 
@@ -58,53 +93,17 @@ var octopusTank = function(){
 var starTank = function(){
 
 	this.img;
-	this.src="../images/tank.png";
-	this.damage1=220;
-	this.damage2=300;
-	this.distance=180;
-	this.fireAngle=70;
-	this.defense=25;
-	this.fireImg;
-	this.hitImg;
-	this.hp=1100;
-	this.bulletImg1="../images/bullet.png";
-	this.bulletImg2="../images/bullet.png";
-
-}
-
-
-var missileTank = function(){
-
-	this.img;
-	this.src="../images/tank.png";
-	this.damage1=150;
-	this.damage2=230;
-	this.distance=190;
-	this.fireAngle=40;
-	this.defense=15;
-	this.fireImg;
-	this.hitImg;
-	this.hp=1400;
-	this.bulletImg1="../images/bullet.png";
-	this.bulletImg2="../images/bullet.png";
-
-}
-
-
-var cannonTank = function(){
-
-	this.img;
-	this.src="../images/tank.png";
-	this.damage1=300;
-	this.damage2=500;
+	this.tankImg="../images/tank/startank.png";
+	this.damage=2000;
 	this.distance=150;
 	this.fireAngle=70;
 	this.defense=20;
 	this.fireImg;
 	this.hitImg;
 	this.hp=1100;
-	this.bulletImg1="../images/bullet.png";
-	this.bulletImg2="../images/bullet.png";
+	this.bulletImg="../images/bullet/star.png";
+	this.bulletWid=30;
+	this.bulletHei=30;
 
 }
 

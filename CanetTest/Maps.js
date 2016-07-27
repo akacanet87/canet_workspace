@@ -18,11 +18,10 @@
 
 var theCastleMap = function(){
 
-	this.bgmSrcS="../music/TheresSomethingAboutSupertank.mp3";
-	this.bgmSrcM="../music/BeHigher.mp3";
-	this.bgSrc="../images/space1.jpg";
-	this.blockImg="../images/block.png";
-	this.windImg="../images/enemyship.png";
+	this.bgmSrc="../music/TheresSomethingAboutSupertank.mp3";
+	this.bgSrc="../images/map/mapCastle.png";
+	this.blockImg="../images/block/block.png";
+	this.windImg="../images/wind/propeller.png";
 	this.blockSize=25;
 	this.blockAreaX=[0, 200, 800, 1200, 1700];
 	this.blockAreaY=[1500, 1800, 1200, 900, 1500];
@@ -34,11 +33,10 @@ var theCastleMap = function(){
 
 var overTheCloudMap = function(){
 
-	this.bgmSrcS="../music/OnceInALifetime.mp3";
-	this.bgmSrcM="../music/LifeIsSoBeautiful.mp3";
-	this.bgSrc="../images/space1.jpg";
-	this.blockImg="../images/block.png";
-	this.windImg="../images/enemyship.png";
+	this.bgmSrc="../music/OnceInALifetime.mp3";
+	this.bgSrc="../images/map/mapSky.png";
+	this.blockImg="../images/block/block.png";
+	this.windImg="../images/wind/star.png";
 	this.blockSize=25;
 	this.blockAreaX=[0, 200, 800, 1200, 1700];
 	this.blockAreaY=[1500, 1800, 1200, 900, 1500];
@@ -50,11 +48,10 @@ var overTheCloudMap = function(){
 
 var theRuinedCityMap = function(){
 
-	this.bgmSrcS="../music/TheProfound.mp3";
-	this.bgmSrcM="../music/TheProfound.mp3";
-	this.bgSrc="../images/space1.jpg";
-	this.blockImg="../images/block.png";
-	this.windImg="../images/enemyship.png";
+	this.bgmSrc="../music/TheProfound.mp3";
+	this.bgSrc="../images/map/mapRuinedCity.png";
+	this.blockImg="../images/block/block.png";
+	this.windImg="../images/wind/dust.png";
 	this.blockSize=25;
 	this.blockAreaX=[0, 200, 800, 1200, 1700];
 	this.blockAreaY=[1500, 1800, 1200, 900, 1500];
@@ -64,13 +61,12 @@ var theRuinedCityMap = function(){
 }
 
 
-var onThePlanetMap = function(){
+var theForestMap = function(){
 
-	this.bgmSrcS="../music/TempTime.mp3";
-	this.bgmSrcM="../music/TempTime.mp3";
-	this.bgSrc="../images/space1.jpg";
-	this.blockImg="../images/block.png";
-	this.windImg="../images/enemyship.png";
+	this.bgmSrc="../music/TempTime.mp3";
+	this.bgSrc="../images/map/mapForest.png";
+	this.blockImg="../images/block/block.png";
+	this.windImg="../images/wind/clober.png";
 	this.blockSize=25;
 	this.blockAreaX=[0, 200, 800, 1200, 1700];
 	this.blockAreaY=[1500, 1800, 1200, 900, 1500];
@@ -82,11 +78,10 @@ var onThePlanetMap = function(){
 
 var theNightMap = function(){
 
-	this.bgmSrcS="../music/WhenSkullMetTheGoldCrown.mp3";
-	this.bgmSrcM="../music/WhenSkullMetTheGoldCrown.mp3";
-	this.bgSrc="../images/space1.jpg";
-	this.blockImg="../images/block.png";
-	this.windImg="../images/enemyship.png";
+	this.bgmSrc="../music/LifeIsSoBeautiful.mp3";
+	this.bgSrc="../images/map/mapNight.jpg";
+	this.blockImg="../images/block/block.png";
+	this.windImg="../images/wind/flower.png";
 	this.blockSize=25;
 	this.blockAreaX=[0, 200, 800, 1200, 1700];
 	this.blockAreaY=[1500, 1800, 1200, 900, 1500];
@@ -96,6 +91,19 @@ var theNightMap = function(){
 }
 
 
+var theDesertMap = function(){
+
+	this.bgmSrc="../music/WhenSkullMetTheGoldCrown.mp3";
+	this.bgSrc="../images/map/mapDesert.jpg";
+	this.blockImg="../images/block/block.png";
+	this.windImg="../images/wind/ash.png";
+	this.blockSize=25;
+	this.blockAreaX=[0, 200, 800, 1200, 1700];
+	this.blockAreaY=[1500, 1800, 1200, 900, 1500];
+	this.blockLen=[70, 100, 90, 80, 120];
+	this.mapFlag=6;
+
+}
 
 
 

@@ -32,10 +32,99 @@ var tankSkillWin = function(){						//	탱크의 능력치를 보여주는 창
 
 }
 
+var helicopter = function( map ){
 
-var dropItem = function(){						//	아이템 떨어뜨리기
+	this.dropItemX=parseInt(Math.random()*3000);
+	this.dropItemY=0;
+	this.velY=1;
+	this.velX=0;
+	this.width=100;
+	this.height=50;
+
+	this.init = function(){
+
+		this.img = document.createElement("img");
+
+		this.img.src="../images/effect/helicopter.png";
+		this.img.style.width=this.width+"px";
+		this.img.style.height=this.height+"px";
+		this.img.style.position="absolute";
+		this.img.style.left=this.dropItemX+"px";
+		this.img.style.top=this.y+"px";
+		
+		this.map.appendChild(this.img);
+
+		this.move();
+
+	}
+
+	this.move = function(){
+
+		var me=this;
+
+		this.x=this.x+this.velX;
+		this.y=this.y+this.velY;
+		this.velY+=this.gravity;
+
+		this.img.style.left=this.x+"px";
+		this.img.style.top=this.y+"px";
+
+
+		if(tankFn.velY>0){
+			
+			this.falling=true;
+
+		}
+
+		//console.log(this.img.style.top);
+
+		for(var i=0;i<blockArr.length;i++){					//	히트테스트
+
+			for(var j=0;j<blockArr[i].length;j++){
+
+				if(blockArr[i][j]!=undefined){
+
+					var result=hitTest(this.img, blockArr[i][j].img );
+
+					if(result){
+
+						//console.log("나 밟았어");
+
+						this.velY=0; //밟으면 떨어지지 않게 velY값을 0으로 준다!!
+
+						this.falling=false;
+
+						break;
+
+					}
+
+				}
+
+			}
+
+		}
+
+		this.st=setTimeout(function(){
+
+			me.move();
+		
+		}, 10);
+
+	}
 
 }
+
+}
+
+
+var dropItem = function( map, gravity ){						//	아이템 떨어뜨리기
+
+	this.map=map;
+	this.gravity=gravity;
+
+	
+
+	
 
 
 
@@ -96,21 +185,50 @@ var audioCtrl = function( src ){
 }
 
 
-var fireAngle = function( cal ){
+var fireAngle = function( bullet, cal ){
 
-	this.x=0;
-	this.rad=1.8;
-	this.y=0;
-	this.angle;
+	this.rad=0.9;
+
 	this.cal=cal;
 
-	this.init = function(){
+	this.angleY+=cal;
 
-		this.y+=this.cal;
-		this.x=parseFloat(Math.sqrt(this.rad-this.y*this.y));
+	this.angleX=parseFloat(Math.sqrt(this.rad*this.rad-this.angleY*this.angleY));
 
-		console.log( this.x+" , "+this.y );
+	if( this.angleY >= 0 && this.angleX >= 0 ){
+
+		this.angleX=this.angleX;
+		this.angleY=this.angleY;
+
+	}else if( this.angleX >= this.rad ){
+
+		this.angleX=this.rad;
+		this.angleY=parseFloat(Math.sqrt(this.rad*this.rad-this.angleX*this.angleX))
+
+	}else if( this.angleY >= this.rad ){
+
+		this.angleY=this.rad;
+		this.angleX=parseFloat(Math.sqrt(this.rad*this.rad-this.angleY*this.angleY))
+
+	}else if( this.angleX <= 0 ){
+
+		this.angleX=0;
+		this.angleY=parseFloat(Math.sqrt(this.rad*this.rad-this.angleX*this.angleX))
+
+	}else if( this.angleY <= 0 ){
+
+		this.angleY=0;
+		this.angleX=parseFloat(Math.sqrt(this.rad*this.rad-this.angleY*this.angleY))
 
 	}
+
+	console.log( this.angleX+" , "+this.angleY);
+
+
+	bullet.angleY=this.angleY;
+
+	bullet.angleX=this.angleX;
+
+	console.log(bullet.angleX+" , "+bullet.angleY);
 
 }
