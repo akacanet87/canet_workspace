@@ -18,7 +18,7 @@
 
 
 
-var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg, damage, bulletWid, bulletHei ){
+var bulletFn = function( map, tankX, tankY, gravity, angleX, angleY, side, bulletImg, damage, bulletWid, bulletHei ){
 	
 	this.img;
 	this.bulletImg=bulletImg;
@@ -29,8 +29,8 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg, 
 	this.bulletWid=bulletWid;
 	this.bulletHei=bulletHei;
 	this.gravity=gravity;
-	this.angleX=pwX;
-	this.angleY=pwY;
+	this.angleX=angleX;
+	this.angleY=angleY;
 	this.side=side;
 	this.st;
 	this.firePw=bulletPower.firePower/5;
@@ -167,6 +167,8 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg, 
 
 		}
 
+		console.log( turn );
+
 
 		for( var a=0 ; a<gameTankArr.length ; a++ ){
 
@@ -180,16 +182,36 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg, 
 					this.map.removeChild(this.img);
 					clearTimeout(this.st);
 
-					//	적군 죽이고
-					this.map.removeChild(gameTankArr[a].img);			//	이미지를 먼저 없애고 delete를 맨마지막에 쓴다.
-					clearTimeout(gameTankArr[a].st);
-					delete gameTankArr[a];				//	배열에서 제거하고 이자리에는 Undefined 가 남음
+					this.calDam = calDamage( gameTankArr[a].hp , gameTankArr[a].defense, this.damage )
+
+					
+
+					if( gameTankArr[a].hp <= 0 ){
+					
+						this.map.removeChild(gameTankArr[a].img);			//	이미지를 먼저 없애고 delete를 맨마지막에 쓴다.
+						clearTimeout(gameTankArr[a].st);
+						delete gameTankArr[a];				//	배열에서 제거하고 이자리에는 Undefined 가 남음
+
+						break;
+						return;
+
+					}else{
+
+						gameTankArr[a].hp-=this.calDam;
+
+						console.log( gameTankArr[a].hp );
+
+						
+
+						break;
+						return;
+
+					}
+
 
 					turn=!turn;
 
-					break;
-					return;
-
+	
 				}
 
 			}
@@ -209,7 +231,10 @@ var bulletFn = function( map, tankX, tankY, gravity, pwX, pwY, side, bulletImg, 
 
 			return;
 
+
 		}
+
+		console.log( turn );
 
 	}
 

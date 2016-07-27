@@ -54,7 +54,7 @@ var theForestMap= new theForestMap();
 var theNightMap= new theNightMap();
 var theDesertMap= new theDesertMap();
 
-var mapArr= new Array( overTheCouldMap, theCastleMap, theRuinedCityMap, theForestMap, theNightMap, theDesertMap );
+var mapArr= new Array( overTheCloudMap, theCastleMap, theRuinedCityMap, theForestMap, theNightMap, theDesertMap );
 
 
 // tank들 선언
@@ -102,11 +102,13 @@ var mapFlag;
 
 var moveMap;
 
-var fireAngle;
 var bulletPower= new bulletPower();
 
 
 var turn=true;
+
+var helicopter;
+var dropItem;
 
 
 var side=true;
@@ -129,8 +131,10 @@ var speed=0;
 var spaceFlag=1;
 
 var cal=0;
-var angleX=0;
-var angleY=0;
+var angleX1=0;
+var angleY1=0;
+var angleX2=0;
+var angleY2=0;
 
 var count1=false;
 var count2=false;
@@ -165,7 +169,7 @@ function init(){
 
 	//moveMap();
 
-	getMap = overTheCloudMap;
+	getMap = mapArr[0];
 
 	gameMap = new mapFn( map, blockArr, getMap.bgSrc, getMap.bgmSrc, getMap.blockImg, getMap.windImg, getMap.blockSize, getMap.blockAreaX, getMap.blockAreaY, getMap.blockLen );
 
@@ -178,8 +182,8 @@ function init(){
 	//}
 
 
-	getTankArr[0]= cannonTank;
-	getTankArr[1]= octopusTank;
+	getTankArr[0]= tankArr[0];
+	getTankArr[1]= tankArr[4];
 
 	gameTankArr[0] = new tankFn(map, birthX1, birthY1, tankWidth, tankHeight, velX, velY, gravity, getTankArr[0].distance, getTankArr[0].fireAngle, getTankArr[0].defense, getTankArr[0].hp, getTankArr[0].tankImg, getTankArr[0].bulletImg, getTankArr[0].bulletWid, getTankArr[0].bulletHei);
 
@@ -189,7 +193,13 @@ function init(){
 
 	gameTankArr[1].init();
 
-	
+	///helicopter = new helicopter( map, gravity, 70, parseInt(Math.random()*3000), -200 );
+
+	//helicopter.init();
+
+	//dropItem = new dropItem ( map, gravity, helicopter.dropSpotX , helicopter.dropSpotY, helicopter.dropDigit );
+
+	//dropItem.init();
 
 	
 	//fireAngle(bulletP1, 0.02);
@@ -207,7 +217,7 @@ window.addEventListener("keydown", function(){
 		
 		key=event.keyCode;
 
-		bulletP1 = new bulletFn(map, gameTankArr[0].x, gameTankArr[0].y, gravity, angleX, angleY, side, gameTankArr[0].bulletImg, gameTankArr[0].damage, gameTankArr[0].bulletWid, gameTankArr[0].bulletHei);
+		bulletP1 = new bulletFn(map, gameTankArr[0].x, gameTankArr[0].y, gravity, angleX1, angleY1, side, gameTankArr[0].bulletImg, gameTankArr[0].damage, gameTankArr[0].bulletWid, gameTankArr[0].bulletHei);
 
 		bulletPower.init();
 
@@ -236,11 +246,11 @@ window.addEventListener("keydown", function(){
 					count1=false;
 					count2=true;
 
-					console.log(bulletPower.firePower);
+					//console.log(bulletPower.firePower);
 
 					bulletPower.end();
 
-					console.log(bulletPower.firePower);
+					//console.log(bulletPower.firePower);
 
 					spaceFlag=!spaceFlag;
 
@@ -292,7 +302,7 @@ window.addEventListener("keydown", function(){
 		
 		key=event.keyCode;
 
-		bulletP2 = new bulletFn(map, gameTankArr[1].x, gameTankArr[1].y, gravity, angleX, angleY, side, gameTankArr[1].bulletImg, gameTankArr[1].damage, gameTankArr[1].bulletWid, gameTankArr[1].bulletHei);
+		bulletP2 = new bulletFn(map, gameTankArr[1].x, gameTankArr[1].y, gravity, angleX2, angleY2, side, gameTankArr[1].bulletImg, gameTankArr[1].damage, gameTankArr[1].bulletWid, gameTankArr[1].bulletHei);
 
 		bulletPower.init();
 

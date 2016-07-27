@@ -32,14 +32,24 @@ var tankSkillWin = function(){						//	탱크의 능력치를 보여주는 창
 
 }
 
-var helicopter = function( map ){
+var helicopter = function( map, gravity, dropHeight, dropItemX, dropItemY ){
 
-	this.dropItemX=parseInt(Math.random()*3000);
-	this.dropItemY=0;
+	this.map=map;
+	this.dropItemX=dropItemX;
+	this.dropItemY=dropItemY;
+	this.dropSpotX;
+	this.dropSpotY;
+	this.dropHeight=dropHeight;
 	this.velY=1;
 	this.velX=0;
 	this.width=100;
 	this.height=50;
+	this.tremble=true;
+	this.dropFlag=true;
+	this.gravity=gravity;
+	this.st;
+	
+	var dropItem;
 
 	this.init = function(){
 
@@ -50,7 +60,7 @@ var helicopter = function( map ){
 		this.img.style.height=this.height+"px";
 		this.img.style.position="absolute";
 		this.img.style.left=this.dropItemX+"px";
-		this.img.style.top=this.y+"px";
+		this.img.style.top=-200+"px";
 		
 		this.map.appendChild(this.img);
 
@@ -62,21 +72,140 @@ var helicopter = function( map ){
 
 		var me=this;
 
-		this.x=this.x+this.velX;
-		this.y=this.y+this.velY;
-		this.velY+=this.gravity;
+		this.st=setTimeout(function(){
 
-		this.img.style.left=this.x+"px";
-		this.img.style.top=this.y+"px";
+			me.move();
+		
+		}, 10);
 
 
-		if(tankFn.velY>0){
-			
-			this.falling=true;
+		if( this.dropItemY == -400 ){
+
+			this.map.removeChild(this.img);
+			clearTimeout(this.st);
 
 		}
 
-		//console.log(this.img.style.top);
+		if( this.dropItemY == 80 ){
+
+			this.dropFlag=!this.dropFlag;
+
+		}
+
+		if( this.dropItemY == this.dropHeight && this.dropFlag ){
+
+			this.dropSpotX=this.dropItemX;
+			this.dropSpotY=this.dropItemY;
+
+
+			//dropItem.init();
+
+		}
+
+		if( this.dropFlag ){
+
+			if( this.tremble ){
+			
+				this.dropItemY+=this.velY;
+
+				this.img.style.left=this.dropItemX+"px";
+				this.img.style.top=this.dropItemY+"px";
+				this.img.style.transform="rotate(5deg)";
+
+				this.tremble=!this.tremble;
+
+			}else{
+
+				this.dropItemY+=this.velY;
+
+				this.img.style.left=this.dropItemX+"px";
+				this.img.style.top=this.dropItemY+"px";
+				this.img.style.transform="rotate(-5deg)";
+
+				this.tremble=!this.tremble;
+
+			}
+
+		}else{
+
+			if( this.tremble ){
+			
+				this.dropItemY-=this.velY;
+
+				this.img.style.left=this.dropItemX+"px";
+				this.img.style.top=this.dropItemY+"px";
+				this.img.style.transform="rotate(5deg)";
+
+				this.tremble=!this.tremble;
+
+			}else{
+
+				this.dropItemY-=this.velY;
+
+				this.img.style.left=this.dropItemX+"px";
+				this.img.style.top=this.dropItemY+"px";
+				this.img.style.transform="rotate(-5deg)";
+
+				this.tremble=!this.tremble;
+
+			}
+
+		}
+
+		
+
+	}
+
+}
+
+
+
+
+var dropItem = function( map, gravity, helX, helY ){						//	아이템 떨어뜨리기
+
+	this.map=map;
+	this.gravity=gravity;
+	this.helX=helX;
+	this.helY=helY;
+	this.itemX;
+	this.itemY;
+	this.width=20;
+	this.height=20;
+	this.st;
+	var me = this;
+
+	this.init = function(){
+
+		this.img = document.createElement("img");
+
+		this.img.src="../images/effect/box.png";
+		this.img.style.width=this.width+"px";
+		this.img.style.height=this.height+"px";
+		this.img.style.position="absolute";
+		this.img.style.left=this.helX+"px";
+		this.img.style.top=this.helY+this.height+"px";
+		
+		this.map.appendChild(this.img);
+
+		this.move();
+
+	}
+
+	this.move = function(){
+
+		this.itemX=this.helX;
+
+		this.itemY+=this.gravity;
+
+		this.img.style.left=this.itemX+"px";
+		this.img.style.top=this.itemY+"px";
+
+		this.st=setTimeout(function(){
+
+			me.move();
+		
+		}, 10);
+
 
 		for(var i=0;i<blockArr.length;i++){					//	히트테스트
 
@@ -104,28 +233,26 @@ var helicopter = function( map ){
 
 		}
 
-		this.st=setTimeout(function(){
 
-			me.move();
-		
-		}, 10);
+		for( var a=0 ; a<gameTankArr.length ; a++ ){
 
+			var result = hitTest(this.img, gameTankArr[a].img);
+
+			if( result ){
+
+				//	총알 죽이고 총알의 setTimeout도 중지
+				this.map.removeChild(this.img);
+				clearTimeout(this.st);
+
+				break;
+
+			}
+
+		}
+	
 	}
 
 }
-
-}
-
-
-var dropItem = function( map, gravity ){						//	아이템 떨어뜨리기
-
-	this.map=map;
-	this.gravity=gravity;
-
-	
-
-	
-
 
 
 var hitTest = function(me, target) {
@@ -229,6 +356,23 @@ var fireAngle = function( bullet, cal ){
 
 	bullet.angleX=this.angleX;
 
-	console.log(bullet.angleX+" , "+bullet.angleY);
+	//console.log(bullet.angleX+" , "+bullet.angleY);
+
+}
+
+
+
+var calDamage = function( hp, defense, damage ){
+
+	//this.tank=tank;
+	this.hp=hp;
+	this.defense=defense;
+	this.damage=damage;
+	this.restHp;
+
+	this.restHp=this.hp-(this.damage-this.defense);
+
+	return this.restHp;
+
 
 }

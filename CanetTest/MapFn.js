@@ -51,7 +51,7 @@ var mapFn = function(map, blockArr ,bgSrc, bgmSrc, blockImg, windImg, blockSize,
 		//console.log(moveMap.PosX+" , "+moveMap.PosY);
 		//console.log(PosX+" , "+PosY);
 		//console.log(this.left+" , "+this.top);
-		console.log(mapPosX+" , "+mapPosY);
+		//console.log(mapPosX+" , "+mapPosY);
 
 		//console.log(this.moveMap.PosX+" , "+this.moveMap.PosY);
 

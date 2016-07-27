@@ -1,5 +1,6 @@
 var hpGauge = function(){						//	체력게이지
 
+
 }
 
 
